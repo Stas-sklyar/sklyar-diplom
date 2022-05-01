@@ -1,0 +1,23 @@
+.TestMode {
+    text-align: center;
+    padding: 30px 15px;
+
+    &-Form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &-SourceTable {
+        margin: 0 auto;
+        width: 250px !important;
+    }
+
+    &-TableCell {
+        padding: 0 !important;
+    }
+
+    &-Btn {
+        margin-top: 15px !important;
+    }
+}

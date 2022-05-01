@@ -1,0 +1,17 @@
+.DemoMode {
+    padding: 100px 15px;
+    text-align: center;
+
+    &-SourceTable {
+        margin: 0 auto;
+        width: 250px !important;
+    }
+
+    &-TableCell {
+        padding: 0 !important;
+    }
+
+    &-Btn {
+        margin-top: 20px !important;
+    }
+}
