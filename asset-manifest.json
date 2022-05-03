@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/sklyar-diplom/static/css/main.35193953.css",
+    "main.js": "/sklyar-diplom/static/js/main.d67771ce.js",
+    "index.html": "/sklyar-diplom/index.html",
+    "main.35193953.css.map": "/sklyar-diplom/static/css/main.35193953.css.map",
+    "main.d67771ce.js.map": "/sklyar-diplom/static/js/main.d67771ce.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35193953.css",
+    "static/js/main.d67771ce.js"
+  ]
+}
