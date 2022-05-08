@@ -1,12 +1,11 @@
 import s from './App.module.scss'
-import DemoMode from './DemoMode/DemoMode'
-import TestMode from './TestMode/TestMode'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import { useState } from 'react'
+import Calc from './Calc/Calc'
 
 function App() {
-  const [value, setValue] = useState('demo-mode');
+  const [value, setValue] = useState('calc');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -21,12 +20,10 @@ function App() {
         textColor="primary"
         indicatorColor="secondary"
       >
-        <Tab value="demo-mode" label="Demo mode" />
-        <Tab value="test-mode" label="Test mode" />
+        <Tab value="calc" label="Calc" />
       </Tabs>
 
-      {value === 'demo-mode' && <DemoMode />}
-      {value === 'test-mode' && <TestMode />}
+      {value === 'calc' && <Calc />}
 
     </div>
   );
