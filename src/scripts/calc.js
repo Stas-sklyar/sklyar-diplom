@@ -13,7 +13,9 @@ export default function calc(amountImplicants, task) {
         lastTableWhereNotFoundPares: [],
         mdnf: '',
         tablePokritiya: [],
-        core: []
+        core: [],
+        coreArrIndexes: [],
+        dopImplicants: []
     }
 
     task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
@@ -90,6 +92,7 @@ export default function calc(amountImplicants, task) {
     // ------------------
     // CORE
     let coreArr = []
+    let coreArrIndexes = []
     for (let i = 0; i < testARROBJ.length; i++) {
         let sumTrue = 0
         let lastIndex = 0
@@ -101,10 +104,12 @@ export default function calc(amountImplicants, task) {
         }
         if (sumTrue === 1) {
             coreArr.push(lastWhereFound[lastIndex])
+            coreArrIndexes.push(lastIndex)
         }
     }
 
     result.core = coreArr
+    result.coreArrIndexes = coreArrIndexes
     // ------------------
 
     // LAST IMPLICANS
@@ -128,6 +133,47 @@ export default function calc(amountImplicants, task) {
 
     console.log(withoutCore)
 
+    let withoutCoreAndSimilar = [...withoutCore]
+
+    for (let i = 0; i < withoutCore.length; i++) {
+        for (let j = 0; j < testARROBJ.length; j++) {
+            for (let key in testARROBJ[j]) {
+                if (key === withoutCore[i]) {
+                    for (let k = 0; k < testARROBJ[j][key].length; k++) {
+                        if (testARROBJ[j][key][k] === "+") {
+                            for (let l = 0; l < coreArrIndexes.length; l++) {
+                                if (k === coreArrIndexes[l]) {
+                                    withoutCoreAndSimilar = withoutCoreAndSimilar.filter(item => {
+                                        return item != key
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    console.log(withoutCoreAndSimilar)
+
+    let dopImplicants = []
+    for (let i = 0; i < withoutCoreAndSimilar.length; i++) {
+        for (let j = 0; j < testARROBJ.length; j++) {
+            for (let key in testARROBJ[j]) {
+                if (key === withoutCoreAndSimilar[i]) {
+                    for (let k = 0; k < testARROBJ[j][key].length; k++) {
+                        if (testARROBJ[j][key][k] === "+") {
+                            console.log(k)
+                            dopImplicants.push(result.foundPares[result.foundPares.length - 1][k])
+                            break
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    result.dopImplicants = dopImplicants
 
     return result
 }
