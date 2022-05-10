@@ -3,8 +3,8 @@ import calc from '../scripts/calc'
 
 function Calc() {
 
-const result = calc(4, [0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1])
-console.log(result)
+  const result = calc(4, [0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1])
+  console.log(result)
 
   return (
     <div className={s["Calc"]}>

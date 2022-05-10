@@ -15,7 +15,8 @@ export default function calc(amountImplicants, task) {
         tablePokritiya: [],
         core: [],
         coreArrIndexes: [],
-        dopImplicants: []
+        dopImplicants: [],
+        resultArr: []
     }
 
     task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
@@ -131,8 +132,6 @@ export default function calc(amountImplicants, task) {
         }
     }
 
-    console.log(withoutCore)
-
     let withoutCoreAndSimilar = [...withoutCore]
 
     for (let i = 0; i < withoutCore.length; i++) {
@@ -154,16 +153,15 @@ export default function calc(amountImplicants, task) {
             }
         }
     }
-    console.log(withoutCoreAndSimilar)
+
 
     let dopImplicants = []
     for (let i = 0; i < withoutCoreAndSimilar.length; i++) {
         for (let j = 0; j < testARROBJ.length; j++) {
             for (let key in testARROBJ[j]) {
                 if (key === withoutCoreAndSimilar[i]) {
-                    for (let k = 0; k < testARROBJ[j][key].length; k++) {
+                    for (let k = testARROBJ[j][key].length; k > 0; k--) {
                         if (testARROBJ[j][key][k] === "+") {
-                            console.log(k)
                             dopImplicants.push(result.foundPares[result.foundPares.length - 1][k])
                             break
                         }
@@ -174,6 +172,13 @@ export default function calc(amountImplicants, task) {
     }
 
     result.dopImplicants = dopImplicants
+
+    result.core = findOnlyUnique(result.core)
+    result.dopImplicants = findOnlyUnique(result.dopImplicants)
+
+    result.mdnf = fromNumToLetterForFourImplicant(result.core.concat(result.dopImplicants))
+    result.mdnf = result.mdnf.slice(0, -1)
+    result.resultArr = result.core.concat(result.dopImplicants)
 
     return result
 }
