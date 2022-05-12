@@ -8,20 +8,24 @@
         align-items: center;
     }
 
-    &-TextField {
-        min-width: 350px !important;
-        margin-bottom: 20px !important;
-    }
+    &-Section {
+        padding: 30px 15px;
 
-    &-SourceTable {
-        padding: 30px 0;
+        &>hr {
+            width: 75%;
+            margin: 30px auto 0 auto;
+        }
     }
 
     &-Table {
         min-width: none;
-        max-width: 400px;
+        max-width: 320px !important;
         margin: 0 auto;
         margin-bottom: 30px;
+
+        &>tr {
+            transition: all 1s ease-in;
+        }
 
         &>thead>tr>th {
             font-weight: bold;
@@ -35,11 +39,18 @@
         }
     }
 
-    &-TableOnlyTrue {
-        padding: 30px 0;
+    &-HightlightRow,
+    &-HightlightCell {
+        background-color: #eee;
+        transition: all 1s ease-in;
     }
+}
 
-    &-SimplifiedTables {
-        padding: 30px 0;
-    }
+button.Calc-NextStepBtn {
+    margin-bottom: 200px;
+}
+
+div.Calc-TextField {
+    width: 300px;
+    margin-bottom: 20px;
 }

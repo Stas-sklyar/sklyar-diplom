@@ -19,7 +19,7 @@ export default function calc(amountImplicants, task) {
         resultArr: []
     }
 
-    task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
+    // task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
     result.task = task
     if (amountImplicants === 4) {
         sourceTable = sourceTableForFourImplicants
@@ -40,13 +40,14 @@ export default function calc(amountImplicants, task) {
     let tempArr = tableOnlyTrue
     let lastTableWhereNotFoundPares = []
     let lastTableWhereNotFoundPares2 = []
+
     while (tempArr.length > 0) {
         let tempResult = findPares(tempArr)
         lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
         lastTableWhereNotFoundPares = tempArr
         tempArr = tempResult
         if (tempArr.length > 0) {
-            result.foundPares.push(tempResult)
+            result.foundPares.push(findOnlyUnique(tempResult))
         }
         else {
             result.lastTableWhereNotFoundPares = lastTableWhereNotFoundPares2
@@ -78,7 +79,7 @@ export default function calc(amountImplicants, task) {
             }
 
             // FIX
-            if (amountMatches >= 3) {
+            if (amountMatches >= 4 - result.foundPares.length) {
                 markArr.push("+")
             }
             else {

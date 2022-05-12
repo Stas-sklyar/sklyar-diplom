@@ -6,7 +6,7 @@ export default function findPares(srcArr) {
             let amountOfMismatches = 0;
             let mismatchIndex = -1
             for (let k = 0; k < srcArr[i].length; k++) {
-                if (srcArr[i][k] !== srcArr[j][k]) {
+                if (srcArr[i][k] !== srcArr[j][k] && (srcArr[i][k] !== 'x' || srcArr[j][k] !== 'x')) {
                     amountOfMismatches += 1;
                     mismatchIndex = k;
                 }

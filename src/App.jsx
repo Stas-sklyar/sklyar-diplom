@@ -20,10 +20,12 @@ function App() {
         textColor="primary"
         indicatorColor="secondary"
       >
-        <Tab value="calc" label="Calc" />
+        <Tab value="calc" label="Калькулятор" />
+        <Tab value="test" label="Тест" />
       </Tabs>
 
       {value === 'calc' && <Calc />}
+      {value === 'test' && <h1>In progress</h1>}
 
     </div>
   );
