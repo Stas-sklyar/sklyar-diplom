@@ -42,11 +42,15 @@ export default function calc(amountImplicants, task) {
     let srcArr = sortByAmount(result.tableOnlyTrue)
     let lastTableWhereNotFoundPares = []
     let lastTableWhereNotFoundPares2 = []
+    let haveParesArr = []
 
     while (srcArr.length > 0) {
         let tempResult = []
         for (let i = 0; i < srcArr.length; i++) {
-            tempResult = findOnlyUnique(tempResult.concat([...findPares((i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i])]))
+            const [res, hasPares] = findPares((i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i])
+            tempResult = findOnlyUnique(tempResult.concat([...res]))
+
+            haveParesArr = haveParesArr.concat(hasPares)
         }
 
         lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
@@ -63,50 +67,37 @@ export default function calc(amountImplicants, task) {
         srcArr = sortByAmount(srcArr)
     }
 
-    // let tempArr = sortByAmount(result.tableOnlyTrue)
-    // let lastTableWhereNotFoundPares = []
-    // let lastTableWhereNotFoundPares2 = []
+    // Таблица покрытия
+    let copyFoundPares = [...result.foundPares]
+    copyFoundPares.splice(-1, 1)
 
-    // let tempResult = []
-    // while(tempArr.length > 0 0) {
-    //     console.log(tempArr)
-    //     for (let j = 0; j < tempArr.length; j++) {
-    //         console.log(tempArr[j])
-    //         tempResult.push(findPares(tempArr[j]))
-    //     }
-    //     lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
-    //     lastTableWhereNotFoundPares = tempArr
-    //     tempArr = tempResult
-    //     if (tempArr.length > 0) {
-    //         result.foundPares.push(findOnlyUnique(tempResult))
-    //     }
-    //     else {
-    //         result.lastTableWhereNotFoundPares = lastTableWhereNotFoundPares2
-    //     }
-    // }
-
-    let test1 = result.lastTableWhereNotFoundPares
-
-    let test1String = []
-    for (let i = 0; i < test1.length; i++) {
-        let str = ''
-        for (let j = 0; j < test1[i].length; j++) {
-            str += test1[i][j]
+    let notFound = []
+    for (let i = 0; i < copyFoundPares.length; i++) {
+        for (let j = 0; j < copyFoundPares[i].length; j++) {
+            let h = -1
+            h = haveParesArr.findIndex(item => {
+                if (item.join('') === copyFoundPares[i][j].join('')) {
+                }
+                return item.join('') === copyFoundPares[i][j].join('')
+            })
+            if (h === -1) {
+                notFound.push(copyFoundPares[i][j])
+            }
         }
-        test1String.push(str)
     }
 
-    let lastWhereFound = result.foundPares[result.foundPares.length - 1]
-
+    console.log(result.foundPares[result.foundPares.length - 1])
+    let lastWhereFound = result.foundPares[result.foundPares.length - 1].concat(notFound)
+    console.log(findOnlyUnique(lastWhereFound))
 
     let testARROBJ = []
-    for (let i = 0; i < test1String.length; i++) {
+    for (let i = 0; i < result.tableOnlyTrue.length; i++) {
         let markArr = []
         for (let j = 0; j < lastWhereFound.length; j++) {
             let amountMatches = 0;
 
             for (let k = 0; k < 4; k++) {
-                if (parseInt(test1String[i].split('')[k]) === lastWhereFound[j][k]) amountMatches++
+                if (parseInt(result.tableOnlyTrue[i][k]) === lastWhereFound[j][k]) amountMatches++
             }
 
             // FIX
@@ -117,7 +108,7 @@ export default function calc(amountImplicants, task) {
                 markArr.push("-")
             }
         }
-        testARROBJ.push({ [test1String[i]]: markArr })
+        testARROBJ.push({ [result.tableOnlyTrue[i]]: markArr })
     }
 
     result.tablePokritiya = testARROBJ
@@ -129,8 +120,8 @@ export default function calc(amountImplicants, task) {
     for (let i = 0; i < testARROBJ.length; i++) {
         let sumTrue = 0
         let lastIndex = 0
-        for (let j = 0; j < testARROBJ[i][test1String[i]].length; j++) {
-            if (testARROBJ[i][test1String[i]][j] === '+') {
+        for (let j = 0; j < testARROBJ[i][result.tableOnlyTrue[i]].length; j++) {
+            if (testARROBJ[i][result.tableOnlyTrue[i]][j] === '+') {
                 sumTrue++
                 lastIndex = j
             }
@@ -150,8 +141,8 @@ export default function calc(amountImplicants, task) {
     for (let i = 0; i < testARROBJ.length; i++) {
         let sumTrue = 0
         let lastIndex = 0
-        for (let j = 0; j < testARROBJ[i][test1String[i]].length; j++) {
-            if (testARROBJ[i][test1String[i]][j] === '+') {
+        for (let j = 0; j < testARROBJ[i][result.tableOnlyTrue[i]].length; j++) {
+            if (testARROBJ[i][result.tableOnlyTrue[i]][j] === '+') {
                 sumTrue++
                 lastIndex = j
             }
@@ -160,7 +151,7 @@ export default function calc(amountImplicants, task) {
             // coreArr.push(lastWhereFound[lastIndex])
         }
         else {
-            withoutCore.push(test1String[i])
+            withoutCore.push(result.tableOnlyTrue[i])
         }
     }
 

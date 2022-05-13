@@ -1,5 +1,6 @@
 export default function findPares(srcArr) {
     let resultTable = []
+    let hasPares = []
 
     for (let i = 0; i < srcArr.length; i++) {
         for (let j = i + 1; j < srcArr.length; j++) {
@@ -15,11 +16,13 @@ export default function findPares(srcArr) {
                 let reformedRow = [...srcArr[i]]
                 reformedRow[mismatchIndex] = 'x'
                 resultTable.push([...reformedRow])
+                hasPares.push(srcArr[i])
+                hasPares.push(srcArr[j])
             }
             amountOfMismatches = 0;
             mismatchIndex = -1
         }
     }
 
-    return resultTable
+    return [resultTable, hasPares]
 }
