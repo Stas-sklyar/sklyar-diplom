@@ -89,6 +89,7 @@ export default function calc(amountImplicants, task) {
     console.log(result.foundPares[result.foundPares.length - 1])
     let lastWhereFound = result.foundPares[result.foundPares.length - 1].concat(notFound)
     console.log(findOnlyUnique(lastWhereFound))
+    result.leftSideTablePokritiya = lastWhereFound
 
     let testARROBJ = []
     for (let i = 0; i < result.tableOnlyTrue.length; i++) {
@@ -97,11 +98,11 @@ export default function calc(amountImplicants, task) {
             let amountMatches = 0;
 
             for (let k = 0; k < 4; k++) {
-                if (parseInt(result.tableOnlyTrue[i][k]) === lastWhereFound[j][k]) amountMatches++
+                if (result.tableOnlyTrue[i][k] === lastWhereFound[j][k] || result.tableOnlyTrue[i][k] === 'x' || lastWhereFound[j][k] === 'x') amountMatches++
             }
 
             // FIX
-            if (amountMatches >= 4 - result.foundPares.length) {
+            if (amountMatches >= 4) {
                 markArr.push("+")
             }
             else {

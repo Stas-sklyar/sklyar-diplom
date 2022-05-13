@@ -166,7 +166,7 @@ function Calc() {
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  {result.lastTableWhereNotFoundPares.map((row, index) => (
+                  {result.tableOnlyTrue.map((row, index) => (
                     <TableCell key={index}>{row}</TableCell>
                   ))}
                 </TableRow>
@@ -175,7 +175,7 @@ function Calc() {
               <TableBody>
                 {helperArrForTablePokritiya.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{result.foundPares[result.foundPares.length - 1][index]}</TableCell>
+                    <TableCell>{result.leftSideTablePokritiya[index]}</TableCell>
                     {row.reverse().map((col, index) => (
                       <TableCell key={index}>{col}</TableCell>
                     ))}
@@ -198,7 +198,7 @@ function Calc() {
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  {result.lastTableWhereNotFoundPares.map((row, index) => (
+                  {result.tableOnlyTrue.map((row, index) => (
                     <TableCell key={index}>{row}</TableCell>
                   ))}
                 </TableRow>
@@ -207,22 +207,14 @@ function Calc() {
               <TableBody>
                 {helperArrForTablePokritiya.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell
-                      className={
-                        currentStep >= 5 &&
-                          result.core.find(item => item.join('') === result.foundPares[result.foundPares.length - 1][index].join(''))
-                          ? s["Calc-HightlightCell"]
-                          : ''
-                      }
-                    >
-                      {result.foundPares[result.foundPares.length - 1][index]}
-                    </TableCell>
-                    {row.map((col, index) => (
-                      <TableCell
-                        key={index}
-                      >
-                        {col}
-                      </TableCell>
+                    <TableCell className={
+                      currentStep >= 5 &&
+                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
+                        ? s["Calc-HightlightCell"]
+                        : ''
+                    }>{result.leftSideTablePokritiya[index]}</TableCell>
+                    {row.reverse().map((col, index) => (
+                      <TableCell key={index}>{col}</TableCell>
                     ))}
                   </TableRow>
                 ))}
@@ -249,7 +241,7 @@ function Calc() {
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  {result.lastTableWhereNotFoundPares.map((row, index) => (
+                  {result.tableOnlyTrue.map((row, index) => (
                     <TableCell key={index}>{row}</TableCell>
                   ))}
                 </TableRow>
@@ -258,15 +250,13 @@ function Calc() {
               <TableBody>
                 {helperArrForTablePokritiya.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell
-                      className={
-                        currentStep >= 6 &&
-                          result.core.find(item => item.join('') === result.foundPares[result.foundPares.length - 1][index].join(''))
-                          ? s["Calc-HightlightCell"]
-                          : ''
-                      }
-                    >
-                      {result.foundPares[result.foundPares.length - 1][index]}
+                    <TableCell className={
+                      currentStep >= 5 &&
+                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
+                        ? s["Calc-HightlightCell"]
+                        : ''
+                    }>
+                      {result.leftSideTablePokritiya[index]}
                     </TableCell>
                     {row.map((col, index, row) => (
                       <TableCell key={index}
@@ -299,7 +289,7 @@ function Calc() {
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  {result.lastTableWhereNotFoundPares.map((row, index) => (
+                  {result.tableOnlyTrue.map((row, index) => (
                     <TableCell key={index}>{row}</TableCell>
                   ))}
                 </TableRow>
@@ -308,20 +298,43 @@ function Calc() {
               <TableBody>
                 {helperArrForTablePokritiya.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{result.foundPares[result.foundPares.length - 1][index]}</TableCell>
-                    {row.map((col, index) => (
-                      <TableCell key={index}>{col}</TableCell>
+                    <TableCell className={
+                      currentStep >= 5 &&
+                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
+                        ? s["Calc-HightlightCell"]
+                        : ''
+                    }>
+                      {result.leftSideTablePokritiya[index]}
+                    </TableCell>
+                    {row.map((col, index, row) => (
+                      <TableCell key={index}
+                        className={
+                          currentStep >= 6
+                            && (result.coreArrIndexes.find(item => item === helperArrForTablePokritiya.findIndex(item => item === row)) >= 0)
+                            && col === '+'
+                            ? s["Calc-HightlightCell"]
+                            : ''
+                        }
+                      >
+                        {col}
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-            <div>
-              <span>?Останні імпліканти?: </span>
-              {result.dopImplicants.map((item, index) => (
-                <b key={index}>{item.join('')} {index !== (result.dopImplicants.length - 1) ? ' v ' : ''} </b>
-              ))}
-            </div>
+
+            {result.dopImplicants.length > 0 &&
+              <div>
+                <span>?Останні імпліканти?: </span>
+                {result.dopImplicants.map((item, index) => (
+                  <b key={index}>{item.join('')} {index !== (result.dopImplicants.length - 1) ? ' v ' : ''} </b>
+                ))}
+              </div>
+            }
+            {result.dopImplicants.length === 0 &&
+              <div>Ядро покриває всі стовпці</div>
+            }
             <Divider />
           </section>
         </Slide>
