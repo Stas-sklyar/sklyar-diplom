@@ -14,13 +14,12 @@ import Slide from '@mui/material/Slide'
 
 function Calc() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [task, setTask] = useState('0000011000110011')
+  const [task, setTask] = useState('0000100011111011')
   const [result, setResult] = useState()
   const [helperArrForTablePokritiya, setHelperArrForTablePokritiya] = useState()
 
   const onCalc = () => {
     const parsedTask = task.split('').map((item) => { return parseInt(item) })
-    console.log(parsedTask)
     const resultObj = calc(4, parsedTask)
     let helperArrForTablePokritiya = []
     for (let i = 0; i < resultObj.tablePokritiya.length; i++) {

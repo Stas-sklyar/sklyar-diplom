@@ -1,4 +1,7 @@
 export default function findOnlyUnique(srcArr) {
+    if(srcArr.length === 0) {
+        return []
+    }
     let uniqueArr = []
 
     for (let i = 0; i < srcArr.length; i++) {

@@ -2,6 +2,7 @@ import findPares from './find-pares'
 import findOnlyUnique from './find-only-unique'
 import { sourceTableForFourImplicants } from './srcTables'
 import { fromNumToLetterForFourImplicant } from './fromNumToLetter'
+import sortByAmount from './sort-by-amount'
 
 export default function calc(amountImplicants, task) {
     let sourceTable = []
@@ -32,27 +33,57 @@ export default function calc(amountImplicants, task) {
             tableOnlyTrue.push([...sourceTable[i]])
         }
     }
+
     result.tableOnlyTrue = tableOnlyTrue
 
     // ---------------------------
-    // Ищем пары (1 раз)
+    // Ищем пары
 
-    let tempArr = tableOnlyTrue
+    let srcArr = sortByAmount(result.tableOnlyTrue)
     let lastTableWhereNotFoundPares = []
     let lastTableWhereNotFoundPares2 = []
 
-    while (tempArr.length > 0) {
-        let tempResult = findPares(tempArr)
+    while (srcArr.length > 0) {
+        let tempResult = []
+        for (let i = 0; i < srcArr.length; i++) {
+            tempResult = findOnlyUnique(tempResult.concat([...findPares((i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i])]))
+        }
+
         lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
-        lastTableWhereNotFoundPares = tempArr
-        tempArr = tempResult
-        if (tempArr.length > 0) {
+        lastTableWhereNotFoundPares = srcArr
+        srcArr = tempResult
+
+        if (srcArr.length > 0) {
             result.foundPares.push(findOnlyUnique(tempResult))
         }
         else {
             result.lastTableWhereNotFoundPares = lastTableWhereNotFoundPares2
         }
+
+        srcArr = sortByAmount(srcArr)
     }
+
+    // let tempArr = sortByAmount(result.tableOnlyTrue)
+    // let lastTableWhereNotFoundPares = []
+    // let lastTableWhereNotFoundPares2 = []
+
+    // let tempResult = []
+    // while(tempArr.length > 0 0) {
+    //     console.log(tempArr)
+    //     for (let j = 0; j < tempArr.length; j++) {
+    //         console.log(tempArr[j])
+    //         tempResult.push(findPares(tempArr[j]))
+    //     }
+    //     lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
+    //     lastTableWhereNotFoundPares = tempArr
+    //     tempArr = tempResult
+    //     if (tempArr.length > 0) {
+    //         result.foundPares.push(findOnlyUnique(tempResult))
+    //     }
+    //     else {
+    //         result.lastTableWhereNotFoundPares = lastTableWhereNotFoundPares2
+    //     }
+    // }
 
     let test1 = result.lastTableWhereNotFoundPares
 
