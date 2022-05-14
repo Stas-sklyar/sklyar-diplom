@@ -17,7 +17,8 @@ export default function calc(amountImplicants, task) {
         core: [],
         coreArrIndexes: [],
         dopImplicants: [],
-        resultArr: []
+        resultArr: [],
+        foundParesIndexes: []
     }
 
     // task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
@@ -43,14 +44,20 @@ export default function calc(amountImplicants, task) {
     let lastTableWhereNotFoundPares = []
     let lastTableWhereNotFoundPares2 = []
     let haveParesArr = []
+    let amountProhodov = 1
 
     while (srcArr.length > 0) {
         let tempResult = []
         for (let i = 0; i < srcArr.length; i++) {
-            const [res, hasPares] = findPares((i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i])
+            const [res, hasPares, resIndexes] = findPares(
+                (i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i],
+                amountProhodov === 1 ? result.sourceTable : null
+            )
             tempResult = findOnlyUnique(tempResult.concat([...res]))
 
             haveParesArr = haveParesArr.concat(hasPares)
+
+            result.foundParesIndexes = result.foundParesIndexes.concat(resIndexes)
         }
 
         lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
@@ -65,6 +72,8 @@ export default function calc(amountImplicants, task) {
         }
 
         srcArr = sortByAmount(srcArr)
+        amountProhodov++
+        result.foundParesIndexes.filter(item => item.join('') !== '-1-1')
     }
 
     // Таблица покрытия

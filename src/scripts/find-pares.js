@@ -1,6 +1,7 @@
-export default function findPares(srcArr) {
+export default function findPares(srcArr, tableForIndexes) {
     let resultTable = []
     let hasPares = []
+    let resultTableIndexes = []
 
     for (let i = 0; i < srcArr.length; i++) {
         for (let j = i + 1; j < srcArr.length; j++) {
@@ -18,11 +19,21 @@ export default function findPares(srcArr) {
                 resultTable.push([...reformedRow])
                 hasPares.push(srcArr[i])
                 hasPares.push(srcArr[j])
+
+                if (tableForIndexes) {
+                    let currentIndexI = tableForIndexes.findIndex((item) => {
+                        return item.join('') === srcArr[i].join('')
+                    })
+                    let currentIndexJ = tableForIndexes.findIndex((item) => {
+                        return item.join('') === srcArr[j].join('')
+                    })
+                    resultTableIndexes.push([currentIndexI, currentIndexJ])
+                }
             }
             amountOfMismatches = 0;
             mismatchIndex = -1
         }
     }
 
-    return [resultTable, hasPares]
+    return [resultTable, hasPares, resultTableIndexes]
 }
