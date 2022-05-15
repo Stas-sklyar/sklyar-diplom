@@ -51,7 +51,7 @@ export default function calc(amountImplicants, task) {
         for (let i = 0; i < srcArr.length; i++) {
             const [res, hasPares, resIndexes] = findPares(
                 (i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i],
-                amountProhodov === 1 ? result.sourceTable : null
+                amountProhodov === 1 ? result.tableOnlyTrue : result.foundPares[result.foundPares.length - 1]
             )
             tempResult = findOnlyUnique(tempResult.concat([...res]))
 
@@ -95,9 +95,7 @@ export default function calc(amountImplicants, task) {
         }
     }
 
-    console.log(result.foundPares[result.foundPares.length - 1])
     let lastWhereFound = result.foundPares[result.foundPares.length - 1].concat(notFound)
-    console.log(findOnlyUnique(lastWhereFound))
     result.leftSideTablePokritiya = lastWhereFound
 
     let testARROBJ = []

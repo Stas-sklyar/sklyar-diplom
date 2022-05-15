@@ -1,0 +1,47 @@
+.Test {
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+
+    &-Section {
+        padding: 30px 15px;
+    }
+
+    &-Form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 15px;
+    }
+
+    &-AddItemForm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    &-TextLeft {
+        text-align: left;
+    }
+
+}
+
+div.Test-TextField {
+    width: 300px;
+    margin: 15px 0;
+}
+
+div.Test-ThirdStepTextField {
+    width: 270px;
+    margin-right: 20px;
+}
+
+button.Test-SymbolBtn {
+    margin: 15px 20px 0 0;
+    text-transform: lowercase;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}

@@ -3,9 +3,10 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import { useState } from 'react'
 import Calc from './Calc/Calc'
+import Test from './Test/Test'
 
 function App() {
-  const [value, setValue] = useState('calc');
+  const [value, setValue] = useState('test');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -25,7 +26,7 @@ function App() {
       </Tabs>
 
       {value === 'calc' && <Calc />}
-      {value === 'test' && <h1>In progress</h1>}
+      {value === 'test' && <Test />}
 
     </div>
   );
