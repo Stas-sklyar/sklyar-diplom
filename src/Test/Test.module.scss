@@ -21,8 +21,31 @@
         margin-bottom: 20px;
     }
 
-    &-TextLeft {
-        text-align: left;
+    &-PairItem,
+    &-LastImplicantItem {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        font-size: 18px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &>.ActionsMenu {
+            cursor: pointer;
+            opacity: 0;
+            margin-left: 12px;
+            transform: translateY(2px);
+            transition: all .15s ease-in-out;
+
+            &--Active {
+                opacity: 1;
+                transition: all .15s ease-in-out;
+            }
+        }
+
     }
 
 }

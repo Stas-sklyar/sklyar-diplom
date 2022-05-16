@@ -10,11 +10,11 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useState, useEffect } from 'react'
 import Slide from '@mui/material/Slide'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 function Test() {
     const [studentName, setStudentName] = useState("")
@@ -70,6 +70,22 @@ function Test() {
     }, [seconds, timerActive])
 
     // STEP 3 ------------------
+    const [selectedIndexOfPairItem, setSelectedIndexOfPairItem] = useState(-1)
+
+    const openPairItemActionsMenu = (index) => {
+        setSelectedIndexOfPairItem(index)
+    }
+
+    const hidePairItemActionsMenu = () => {
+        setSelectedIndexOfPairItem(-1)
+    }
+
+    const deletePairOfImplicant = (index) => {
+        let newArr = selectedPairsOfImplicants
+        newArr.splice(index, 1)
+        setSelectedPairsOfImplicants([...newArr])
+    }
+
     const handleImplicantPair = (value) => {
         if (!(value.length > 2)) {
             setImplicantPair(value)
@@ -88,6 +104,22 @@ function Test() {
 
 
     // STEP 4 ------------------
+    const [selectedIndexOfLastImplicantItem, setSelectedIndexOfLastImplicantItem] = useState(-1)
+
+    const openLastImplicantItemActionsMenu = (index) => {
+        setSelectedIndexOfLastImplicantItem(index)
+    }
+
+    const hideLastImplicantItemActionsMenu = () => {
+        setSelectedIndexOfLastImplicantItem(-1)
+    }
+
+    const deleteLastImplicantItem = (index) => {
+        let newArr = selectedLastImplicants
+        newArr.splice(index, 1)
+        setSelectedLastImplicants([...newArr])
+    }
+
     const handleLastImplicant = (value) => {
         if (
             !(value.length > 4) &&
@@ -201,7 +233,7 @@ function Test() {
                 <Slide direction="down" in={currentStep >= 2}>
                     <section className={s["Test-Section"]}>
                         <h3>2. Другий крок</h3>
-                        <p className={s["Test-TextLeft"]}>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
+                        <p>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
                         <Table className={stylesCalc["Calc-Table"]}>
                             <TableHead>
                                 <TableRow>
@@ -256,19 +288,33 @@ function Test() {
                             </Button>
                         </div>
 
-                        <p>
+                        <div>
                             {selectedPairsOfImplicants.map((item, index) => (
-                                <div key={index}>
-                                    [{item.join(' - ')}]
-                                    {index !== selectedPairsOfImplicants.length - 1 ? ' , ' : ''}
+                                <div
+                                    key={index}
+                                    className={s["Test-PairItem"]}
+                                    onMouseEnter={() => openPairItemActionsMenu(index)}
+                                    onMouseLeave={() => hidePairItemActionsMenu()}
+                                >
+                                    <div>
+                                        [{item.join(' - ')}]
+                                        {index !== selectedPairsOfImplicants.length - 1 ? ',' : ' '}
+                                    </div>
+                                    <div
+                                        className={s["ActionsMenu"] + " " + ((index === selectedIndexOfPairItem) ? s["ActionsMenu--Active"] : '')}
+                                        onClick={() => deletePairOfImplicant(index)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
+                                    </div>
                                 </div>
                             ))}
-                        </p>
+                        </div>
                     </div>
-                </section>
+                </section >
             }
 
-            {currentStep >= 4 &&
+            {
+                currentStep >= 4 &&
                 <section className={s["Test-Section"]}>
                     <h3>4. Четвертий крок</h3>
 
@@ -296,9 +342,22 @@ function Test() {
 
                         <p>
                             {selectedLastImplicants.map((item, index) => (
-                                <div key={index}>
-                                    [{item.join(' - ')}]
-                                    {index !== selectedLastImplicants.length - 1 ? ' , ' : ''}
+                                <div key={index}
+                                    className={s["Test-LastImplicantItem"]}
+                                    onMouseEnter={() => openLastImplicantItemActionsMenu(index)}
+                                    onMouseLeave={() => hideLastImplicantItemActionsMenu()}
+                                >
+                                    <div>
+                                        [{item.join(' - ')}]
+                                        {index !== selectedLastImplicants.length - 1 ? ',' : ' '}
+                                    </div>
+
+                                    <div
+                                        className={s["ActionsMenu"] + " " + ((index === selectedIndexOfLastImplicantItem) ? s["ActionsMenu--Active"] : '')}
+                                        onClick={() => deleteLastImplicantItem(index)}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
+                                    </div>
                                 </div>
                             ))}
                         </p>
@@ -306,7 +365,8 @@ function Test() {
                 </section>
             }
 
-            {currentStep >= 5 &&
+            {
+                currentStep >= 5 &&
                 <section className={s["Test-Section"]}>
                     <h3>5. П'ятий крок</h3>
                     <p>Введіть ядро в форматі - ab!c v b!c</p>
@@ -343,7 +403,8 @@ function Test() {
                 </section>
             }
 
-            {currentStep >= 6 &&
+            {
+                currentStep >= 6 &&
                 <section className={s["Test-Section"]}>
                     <h3>6. Шостий крок</h3>
                     <p>Введіть МДНФ в форматі - ab!c v b!c</p>
@@ -435,7 +496,7 @@ function Test() {
                 </DialogActions>
             </Dialog>
 
-        </div>
+        </div >
     )
 }
 
