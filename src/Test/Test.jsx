@@ -15,6 +15,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import handleTest from '../scripts/test'
 
 function Test() {
     const [studentName, setStudentName] = useState("")
@@ -153,8 +154,16 @@ function Test() {
 
     // SEND TEST AND CALC RESULT
     const sendTest = () => {
+        let userAnswers = {
+            selectedPairsOfImplicants,
+            selectedLastImplicants,
+            userCore,
+            userMDNF
+        }
+        handleTest(userAnswers, result)
+
         alert("Тест відправленно!")
-        setCurrentStep(0)
+        // setCurrentStep(0)
     }
 
     return (
@@ -369,7 +378,7 @@ function Test() {
                 currentStep >= 5 &&
                 <section className={s["Test-Section"]}>
                     <h3>5. П'ятий крок</h3>
-                    <p>Введіть ядро в форматі - ab!c v b!c</p>
+                    <p>Введіть ядро в форматі - ab!cvb!c</p>
                     <TextField
                         value={userCore}
                         className={s["Test-ThirdStepTextField"]}
@@ -379,7 +388,7 @@ function Test() {
                         type="text"
                     />
                     <div>
-                        {['a', 'b', 'c', 'd', '!', ' v '].map(item => (
+                        {['a', 'b', 'c', 'd', '!', 'v'].map(item => (
                             <Button
                                 className={s["Test-SymbolBtn"]}
                                 variant="outlined"
@@ -407,7 +416,7 @@ function Test() {
                 currentStep >= 6 &&
                 <section className={s["Test-Section"]}>
                     <h3>6. Шостий крок</h3>
-                    <p>Введіть МДНФ в форматі - ab!c v b!c</p>
+                    <p>Введіть МДНФ в форматі - ab!cvb!c</p>
                     <TextField
                         value={userMDNF}
                         className={s["Test-ThirdStepTextField"]}
@@ -417,7 +426,7 @@ function Test() {
                         type="text"
                     />
                     <div>
-                        {['a', 'b', 'c', 'd', '!', ' v '].map(item => (
+                        {['a', 'b', 'c', 'd', '!', 'v'].map(item => (
                             <Button
                                 className={s["Test-SymbolBtn"]}
                                 variant="outlined"
