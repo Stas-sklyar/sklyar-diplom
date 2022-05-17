@@ -34,7 +34,9 @@ function Test() {
     const [lastImplicants, setLastImplicants] = useState('')
     const [selectedLastImplicants, setSelectedLastImplicants] = useState([])
 
-    const [userCore, setUserCore] = useState('')
+    const [implicantOfUserCore, setImplicantOfUserCore] = useState('')
+    const [selectedImplicantsOfUserCore, setSelectedImplicantsOfUserCore] = useState([])
+
     const [userMDNF, setUserMDNF] = useState('')
 
     const [result, setResult] = useState()
@@ -144,6 +146,46 @@ function Test() {
         setLastImplicants('')
     }
 
+    // STEP 5 ------------------
+    const [selectedIndexOfImplicantsForUserCore, setSelectedIndexOfImplicantsForUserCore] = useState(-1)
+
+    const openImplicantOfUsrCoreItemActionsMenu = (index) => {
+        setSelectedIndexOfImplicantsForUserCore(index)
+    }
+
+    const hideImplicantOfUsrCoreItemActionsMenu = () => {
+        setSelectedIndexOfImplicantsForUserCore(-1)
+    }
+
+    const deleteImplicantOfUserCoreItem = (index) => {
+        let newArr = selectedImplicantsOfUserCore
+        newArr.splice(index, 1)
+        setSelectedImplicantsOfUserCore([...newArr])
+    }
+
+    const handleUserCore = (value) => {
+        if (
+            !(value.length > 4) &&
+            (
+                value[value.length - 1] === '1' ||
+                value[value.length - 1] === '0' ||
+                value[value.length - 1] === 'x'
+            )
+        ) {
+            setImplicantOfUserCore(value)
+        }
+    }
+
+    const handleAddImplicantOfCore = (implicantOfUserCore) => {
+        if (implicantOfUserCore.length !== 4) {
+            return
+        }
+        let newArr = selectedImplicantsOfUserCore
+        newArr.push([implicantOfUserCore])
+        setSelectedImplicantsOfUserCore([...newArr])
+        setImplicantOfUserCore('')
+    }
+
     // CLOSE TEST ------------------
     const handleCloseDialog = (next) => {
         if (next) {
@@ -157,7 +199,7 @@ function Test() {
         let userAnswers = {
             selectedPairsOfImplicants,
             selectedLastImplicants,
-            userCore,
+            userCore: selectedImplicantsOfUserCore,
             userMDNF
         }
         handleTest(userAnswers, result)
@@ -349,7 +391,7 @@ function Test() {
                             </Button>
                         </div>
 
-                        <p>
+                        <div>
                             {selectedLastImplicants.map((item, index) => (
                                 <div key={index}
                                     className={s["Test-LastImplicantItem"]}
@@ -369,7 +411,7 @@ function Test() {
                                     </div>
                                 </div>
                             ))}
-                        </p>
+                        </div>
                     </div>
                 </section>
             }
@@ -378,36 +420,48 @@ function Test() {
                 currentStep >= 5 &&
                 <section className={s["Test-Section"]}>
                     <h3>5. П'ятий крок</h3>
-                    <p>Введіть ядро в форматі - ab!cvb!c</p>
-                    <TextField
-                        value={userCore}
-                        className={s["Test-ThirdStepTextField"]}
-                        label="Введіть ядро"
-                        variant="outlined"
-                        size='small'
-                        type="text"
-                    />
-                    <div>
-                        {['a', 'b', 'c', 'd', '!', 'v'].map(item => (
-                            <Button
-                                className={s["Test-SymbolBtn"]}
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => setUserCore(userCore + item)}
-                                size="small"
-                            >
-                                {item}
-                            </Button>
-                        ))}
-                        <Button
-                            className={s["Test-SymbolBtn"]}
+                    <p>Введіть ядро в форматі - [[1,0,x,1], [0,1,x,0]]</p>
+
+                    <div className={s["Test-AddItemForm"]}>
+                        <TextField
+                            value={implicantOfUserCore}
+                            onChange={e => handleUserCore(e.target.value)}
+                            className={s["Test-ThirdStepTextField"]}
+                            label="Введіть імпліканту"
                             variant="outlined"
-                            color="primary"
-                            onClick={() => setUserCore(userCore.slice(0, -1))}
-                            size="small"
+                            size='small'
+                            type="text"
+                        />
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            onClick={() => handleAddImplicantOfCore(implicantOfUserCore)}
+                            size='small'
                         >
-                            ←
+                            Додати імпліканту
                         </Button>
+                    </div>
+
+                    <div>
+                        {selectedImplicantsOfUserCore.map((item, index) => (
+                            <div key={index}
+                                className={s["Test-LastImplicantItem"]}
+                                onMouseEnter={() => openImplicantOfUsrCoreItemActionsMenu(index)}
+                                onMouseLeave={() => hideImplicantOfUsrCoreItemActionsMenu()}
+                            >
+                                <div>
+                                    [{item.join(' - ')}]
+                                    {index !== selectedImplicantsOfUserCore.length - 1 ? ',' : ' '}
+                                </div>
+
+                                <div
+                                    className={s["ActionsMenu"] + " " + ((index === selectedIndexOfImplicantsForUserCore) ? s["ActionsMenu--Active"] : '')}
+                                    onClick={() => deleteImplicantOfUserCoreItem(index)}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </section>
             }
@@ -416,7 +470,7 @@ function Test() {
                 currentStep >= 6 &&
                 <section className={s["Test-Section"]}>
                     <h3>6. Шостий крок</h3>
-                    <p>Введіть МДНФ в форматі - ab!cvb!c</p>
+                    <p>Введіть МДНФ в форматі - ab!c v b!c</p>
                     <TextField
                         value={userMDNF}
                         className={s["Test-ThirdStepTextField"]}
@@ -426,7 +480,7 @@ function Test() {
                         type="text"
                     />
                     <div>
-                        {['a', 'b', 'c', 'd', '!', 'v'].map(item => (
+                        {['a', 'b', 'c', 'd', '!', ' v '].map(item => (
                             <Button
                                 className={s["Test-SymbolBtn"]}
                                 variant="outlined"
