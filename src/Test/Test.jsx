@@ -16,10 +16,13 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import handleTest from '../scripts/test'
+import Divider from '@mui/material/Divider'
 
 function Test() {
+    const [testFinished, setTestFinished] = useState(false)
     const [studentName, setStudentName] = useState("")
     const [studentGroup, setStudentGroup] = useState("")
+    const [userResult, setUserResult] = useState()
 
     const [seconds, setSeconds] = useState(600)
     const [timerActive, setTimerActive] = useState(false)
@@ -202,15 +205,17 @@ function Test() {
             userCore: selectedImplicantsOfUserCore,
             userMDNF
         }
-        handleTest(userAnswers, result)
+        setUserResult(handleTest(userAnswers, result))
 
         alert("Тест відправленно!")
-        // setCurrentStep(0)
+        setTestFinished(true)
+        setCurrentStep(0)
+        console.log(userResult)
     }
 
     return (
         <div className={s["Test"]}>
-            {timerActive && currentStep !== 0 &&
+            {timerActive && currentStep !== 0 && !testFinished &&
                 <h4>
                     {
                         (seconds / 60).toFixed(0) - 1 === 0
@@ -220,7 +225,7 @@ function Test() {
                 </h4>
             }
 
-            {currentStep === 0 &&
+            {currentStep === 0 && !testFinished &&
                 <form className={s["Test-Form"]}>
                     <TextField
                         value={studentName}
@@ -505,19 +510,6 @@ function Test() {
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             {
                 currentStep < 6 && currentStep >= 1 &&
                 <Button
@@ -537,6 +529,94 @@ function Test() {
                 >
                     Завершити тест
                 </Button>
+            }
+
+            {testFinished &&
+                <section>
+                    <h3>Ваш бал: x</h3>
+                    {userResult.step3.notFoundPares.length > 0 &&
+                        <p>
+                            На третьому кроці ви не знайшли такі пари:<br></br>
+                            {userResult.step3.notFoundPares.map((item, index) => (
+                                <span>[{item[0] + ' - ' + item[1]}]
+                                    {userResult.step3.notFoundPares.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+
+                    {userResult.step3.mismatchedPairs.length > 0 &&
+                        <p>Також пари, які ви знайшли неправильно:
+                            <pre>{userResult.step3.mismatchedPairs.map((item, index) => (
+                                <span>[{item[0] + ' - ' + item[1]}]
+                                    {userResult.step3.mismatchedPairs.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}</pre>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+                    <Divider />
+                    {userResult.step4.notFoundImplicants.length > 0 &&
+                        <p>На четвертому кроці ви не знайшли такі імпліканти:
+                            <br></br>
+                            {userResult.step4.notFoundImplicants.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step4.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+                    {userResult.step4.mismatchedImplicants.length > 0 &&
+                        <p>Також імпліканти, які ви знайшли неправильно:
+                            <br></br>
+                            {userResult.step4.mismatchedImplicants.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step4.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+                    <Divider />
+                    {userResult.step5.notFoundImplicants.length > 0 &&
+                        <p>На п'ятому кроці ви не знайшли такі імпліканти, які належать до ядра:
+                            <br></br>
+                            {userResult.step5.notFoundImplicants.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step5.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+                    {userResult.step5.mismatchedImplicants.length > 0 &&
+                        <p>Також імпліканти, які ви знайшли неправильно:
+                            <br></br>
+                            {userResult.step5.mismatchedImplicants.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step5.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+
+                    <Divider />
+                    {userResult.step6.amountOfMismatches > 0 &&
+                        <p>На шостому кроці кількість помилок, які ви зробили в МДНФ:
+                            {`${userResult.step6.amountOfMismatches} шт.`}
+                            <p> Через це ви одержуєте: -x баллів</p>
+                        </p>
+                    }
+
+                </section>
             }
 
 

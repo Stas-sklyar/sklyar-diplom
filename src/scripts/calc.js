@@ -208,7 +208,7 @@ export default function calc(amountImplicants, task) {
     result.dopImplicants = findOnlyUnique(result.dopImplicants)
 
     result.mdnf = fromNumToLetterForFourImplicant(result.core.concat(result.dopImplicants))
-    result.mdnf = result.mdnf.slice(0, -2)
+    result.mdnf = result.mdnf.slice(0, result.mdnf.length - 3)
     result.resultArr = result.core.concat(result.dopImplicants)
 
     return result

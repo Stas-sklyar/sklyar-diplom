@@ -13,11 +13,11 @@ export default function handleTest(userAnswers, result) {
         step5: {
             notFoundImplicants: [],
             mismatchedImplicants: []
+        },
+        step6: {
+            amountOfMismatches: 0,
         }
     }
-
-    console.log(userAnswers)
-    console.log(result)
 
     // PARSED USER ANSWERS ---------------
     for (let i = 0; i < userAnswers.selectedLastImplicants.length; i++) {
@@ -115,4 +115,15 @@ export default function handleTest(userAnswers, result) {
     userResult.step5.mismatchedImplicants = mismatchedImplicantsOfCore
 
     // STEP 6 -----------------
+    result.mdnf = result.mdnf.trim()
+    userAnswers.userMDNF = userAnswers.userMDNF.trim()
+
+    for (let i = 0; i < result.mdnf.length; i++) {
+        if (result.mdnf[i] !== userAnswers.userMDNF[i]) {
+            userResult.step6.amountOfMismatches += 1
+        }
+    }
+
+
+    return userResult
 }
