@@ -1,3 +1,5 @@
+import calcUserGrade from './calc-user-grade'
+
 export default function handleTest(userAnswers, result) {
     let userResult = {
         step1: {
@@ -15,6 +17,9 @@ export default function handleTest(userAnswers, result) {
         step4: {
             notFoundItemsOfMDNF: [],
             mismatchedItemsOfMDNF: []
+        },
+        userRating: {
+
         }
     }
 
@@ -138,7 +143,9 @@ export default function handleTest(userAnswers, result) {
     userResult.step4.notFoundItemsOfMDNF = notFoundItemsOfMDNF
     userResult.step4.mismatchedItemsOfMDNF = mismatchedItemsOfMDNF
 
-    console.log(userResult)
+    // CALC USER RATING
+    userResult.userRating = calcUserGrade(userResult, result)
+    console.log(result)
 
     return userResult
 }
