@@ -30,8 +30,6 @@ export default function findPares(srcArr, tableForIndexes) {
                     resultTableIndexes.push([currentIndexI, currentIndexJ])
                 }
             }
-            amountOfMismatches = 0
-            mismatchIndex = -1
         }
     }
 

@@ -1,0 +1,31 @@
+.Table {
+    min-width: none;
+    max-width: 320px !important;
+    margin: 0 auto;
+    margin-bottom: 30px;
+
+    &>tr {
+        transition: all 1s ease-in;
+    }
+
+    &>thead>tr>th {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    &>thead>tr>th,
+    &>tbody>tr>td {
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+.HightlightRow,
+.HightlightCell {
+    background-color: #eee;
+    transition: all 1s ease-in;
+}
+
+button.NextStepBtn {
+    margin-bottom: 200px;
+}

@@ -4,8 +4,7 @@ import { sourceTableForFourImplicants } from './srcTables'
 import { fromNumToLetterForFourImplicant } from './fromNumToLetter'
 import sortByAmount from './sort-by-amount'
 
-export default function calc(amountImplicants, task) {
-    let sourceTable = []
+export default function calc(amountOfImplicants, task) {
     let result = {
         sourceTable: [],
         task: [],
@@ -21,158 +20,162 @@ export default function calc(amountImplicants, task) {
         foundParesIndexes: []
     }
 
-    // task = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1]
+    let sourceTable = []
     result.task = task
-    if (amountImplicants === 4) {
+    if (amountOfImplicants === 4) {
         sourceTable = sourceTableForFourImplicants
         result.sourceTable = sourceTable
     }
 
+    // Формируем таблиц где F = 1
     let tableOnlyTrue = []
     for (let i = 0; i < sourceTable.length; i++) {
         if (task[i] === 1) {
             tableOnlyTrue.push([...sourceTable[i]])
         }
     }
-
     result.tableOnlyTrue = tableOnlyTrue
 
     // ---------------------------
     // Ищем пары
 
-    let srcArr = sortByAmount(result.tableOnlyTrue)
+    let sourceTableForFindingPairs = sortByAmount(result.tableOnlyTrue)
     let lastTableWhereNotFoundPares = []
     let lastTableWhereNotFoundPares2 = []
-    let haveParesArr = []
-    let amountProhodov = 1
+    let allImplicantsWhichHavePares = []
+    let numberOfIterations = 1
 
-    while (srcArr.length > 0) {
-        let tempResult = []
-        for (let i = 0; i < srcArr.length; i++) {
-            const [res, hasPares, resIndexes] = findPares(
-                (i + 1) !== srcArr.length ? srcArr[i].concat(srcArr[i + 1]) : srcArr[i],
-                amountProhodov === 1 ? result.tableOnlyTrue : result.foundPares[result.foundPares.length - 1]
-            )
-            tempResult = findOnlyUnique(tempResult.concat([...res]))
+    while (sourceTableForFindingPairs.length > 0) {
+        let foundPairsInCurrentIteration = []
+        for (let i = 0; i < sourceTableForFindingPairs.length; i++) {
+            const [foundImplicantsAtCurrentIteration, implicantsWhichHavePare, indexesOfImplicantsWhichHavePare] =
+                findPares(
+                    (i + 1) !== sourceTableForFindingPairs.length
+                        ? sourceTableForFindingPairs[i].concat(sourceTableForFindingPairs[i + 1])
+                        : sourceTableForFindingPairs[i],
+                    numberOfIterations === 1
+                        ? result.tableOnlyTrue
+                        : result.foundPares[result.foundPares.length - 1]
+                )
+            foundPairsInCurrentIteration = findOnlyUnique(foundPairsInCurrentIteration.concat([...foundImplicantsAtCurrentIteration]))
 
-            haveParesArr = haveParesArr.concat(hasPares)
+            allImplicantsWhichHavePares = allImplicantsWhichHavePares.concat(implicantsWhichHavePare)
 
-            result.foundParesIndexes = result.foundParesIndexes.concat(resIndexes)
+            result.foundParesIndexes = result.foundParesIndexes.concat(indexesOfImplicantsWhichHavePare)
         }
 
         lastTableWhereNotFoundPares2 = lastTableWhereNotFoundPares
-        lastTableWhereNotFoundPares = srcArr
-        srcArr = tempResult
+        lastTableWhereNotFoundPares = sourceTableForFindingPairs
+        sourceTableForFindingPairs = foundPairsInCurrentIteration
 
-        if (srcArr.length > 0) {
-            result.foundPares.push(findOnlyUnique(tempResult))
+        if (sourceTableForFindingPairs.length > 0) {
+            result.foundPares.push(findOnlyUnique(foundPairsInCurrentIteration))
         }
         else {
             result.lastTableWhereNotFoundPares = lastTableWhereNotFoundPares2
         }
 
-        srcArr = sortByAmount(srcArr)
-        amountProhodov++
+        sourceTableForFindingPairs = sortByAmount(sourceTableForFindingPairs)
+        numberOfIterations++
         result.foundParesIndexes.filter(item => item.join('') !== '-1-1')
     }
 
     // Таблица покрытия
-    let copyFoundPares = [...result.foundPares]
-    copyFoundPares.splice(-1, 1)
 
-    let notFound = []
-    for (let i = 0; i < copyFoundPares.length; i++) {
-        for (let j = 0; j < copyFoundPares[i].length; j++) {
+    // Ишем импликанты которые не имеют пару
+    let foundParesArrWithoutLastFoundParesArr = [...result.foundPares]
+    foundParesArrWithoutLastFoundParesArr.splice(-1, 1)
+
+    let implicantsWhichNotHavePares = []
+    for (let i = 0; i < foundParesArrWithoutLastFoundParesArr.length; i++) {
+        for (let j = 0; j < foundParesArrWithoutLastFoundParesArr[i].length; j++) {
             let h = -1
-            h = haveParesArr.findIndex(item => {
-                if (item.join('') === copyFoundPares[i][j].join('')) {
+            h = allImplicantsWhichHavePares.findIndex(item => {
+                if (item.join('') === foundParesArrWithoutLastFoundParesArr[i][j].join('')) {
                 }
-                return item.join('') === copyFoundPares[i][j].join('')
+                return item.join('') === foundParesArrWithoutLastFoundParesArr[i][j].join('')
             })
             if (h === -1) {
-                notFound.push(copyFoundPares[i][j])
+                implicantsWhichNotHavePares.push(foundParesArrWithoutLastFoundParesArr[i][j])
             }
         }
     }
 
-    let lastWhereFound = result.foundPares[result.foundPares.length - 1].concat(notFound)
-    result.leftSideTablePokritiya = lastWhereFound
+    let leftSideOfCoverageTable = result.foundPares[result.foundPares.length - 1].concat(implicantsWhichNotHavePares)
+    result.leftSideTablePokritiya = leftSideOfCoverageTable
 
-    let testARROBJ = []
+    let coverageTable = []
     for (let i = 0; i < result.tableOnlyTrue.length; i++) {
-        let markArr = []
-        for (let j = 0; j < lastWhereFound.length; j++) {
+        let arrOfLabels = []
+        for (let j = 0; j < leftSideOfCoverageTable.length; j++) {
             let amountMatches = 0;
 
             for (let k = 0; k < 4; k++) {
-                if (result.tableOnlyTrue[i][k] === lastWhereFound[j][k] || result.tableOnlyTrue[i][k] === 'x' || lastWhereFound[j][k] === 'x') amountMatches++
+                if (
+                    result.tableOnlyTrue[i][k] === leftSideOfCoverageTable[j][k]
+                    || result.tableOnlyTrue[i][k] === 'x'
+                    || leftSideOfCoverageTable[j][k] === 'x'
+                ) {
+                    amountMatches++
+                }
             }
 
-            // FIX
-            if (amountMatches >= 4) {
-                markArr.push("+")
-            }
-            else {
-                markArr.push("-")
-            }
+            amountMatches >= 4 ? arrOfLabels.push("+") : arrOfLabels.push("-")
         }
-        testARROBJ.push({ [result.tableOnlyTrue[i]]: markArr })
+        coverageTable.push({ [result.tableOnlyTrue[i]]: arrOfLabels })
     }
 
-    result.tablePokritiya = testARROBJ
+    result.tablePokritiya = coverageTable
 
     // ------------------
     // CORE
     let coreArr = []
-    let coreArrIndexes = []
-    for (let i = 0; i < testARROBJ.length; i++) {
+    let indexesOfCoreArr = []
+    for (let i = 0; i < coverageTable.length; i++) {
         let sumTrue = 0
         let lastIndex = 0
-        for (let j = 0; j < testARROBJ[i][result.tableOnlyTrue[i]].length; j++) {
-            if (testARROBJ[i][result.tableOnlyTrue[i]][j] === '+') {
+        for (let j = 0; j < coverageTable[i][result.tableOnlyTrue[i]].length; j++) {
+            if (coverageTable[i][result.tableOnlyTrue[i]][j] === '+') {
                 sumTrue++
                 lastIndex = j
             }
         }
         if (sumTrue === 1) {
-            coreArr.push(lastWhereFound[lastIndex])
-            coreArrIndexes.push(lastIndex)
+            coreArr.push(leftSideOfCoverageTable[lastIndex])
+            indexesOfCoreArr.push(lastIndex)
         }
     }
 
     result.core = coreArr
-    result.coreArrIndexes = coreArrIndexes
+    result.coreArrIndexes = indexesOfCoreArr
     // ------------------
 
     // LAST IMPLICANS
-    let withoutCore = []
-    for (let i = 0; i < testARROBJ.length; i++) {
+    let implicantsWithoutCore = []
+    for (let i = 0; i < coverageTable.length; i++) {
         let sumTrue = 0
         let lastIndex = 0
-        for (let j = 0; j < testARROBJ[i][result.tableOnlyTrue[i]].length; j++) {
-            if (testARROBJ[i][result.tableOnlyTrue[i]][j] === '+') {
+        for (let j = 0; j < coverageTable[i][result.tableOnlyTrue[i]].length; j++) {
+            if (coverageTable[i][result.tableOnlyTrue[i]][j] === '+') {
                 sumTrue++
                 lastIndex = j
             }
         }
-        if (sumTrue === 1) {
-            // coreArr.push(lastWhereFound[lastIndex])
-        }
-        else {
-            withoutCore.push(result.tableOnlyTrue[i])
+        if (sumTrue !== 1) {
+            implicantsWithoutCore.push(result.tableOnlyTrue[i])
         }
     }
 
-    let withoutCoreAndSimilar = [...withoutCore]
+    let withoutCoreAndSimilar = [...implicantsWithoutCore]
 
-    for (let i = 0; i < withoutCore.length; i++) {
-        for (let j = 0; j < testARROBJ.length; j++) {
-            for (let key in testARROBJ[j]) {
-                if (key === withoutCore[i]) {
-                    for (let k = 0; k < testARROBJ[j][key].length; k++) {
-                        if (testARROBJ[j][key][k] === "+") {
-                            for (let l = 0; l < coreArrIndexes.length; l++) {
-                                if (k === coreArrIndexes[l]) {
+    for (let i = 0; i < implicantsWithoutCore.length; i++) {
+        for (let j = 0; j < coverageTable.length; j++) {
+            for (let key in coverageTable[j]) {
+                if (key === implicantsWithoutCore[i]) {
+                    for (let k = 0; k < coverageTable[j][key].length; k++) {
+                        if (coverageTable[j][key][k] === "+") {
+                            for (let l = 0; l < indexesOfCoreArr.length; l++) {
+                                if (k === indexesOfCoreArr[l]) {
                                     withoutCoreAndSimilar = withoutCoreAndSimilar.filter(item => {
                                         return item != key
                                     })
@@ -185,14 +188,14 @@ export default function calc(amountImplicants, task) {
         }
     }
 
-
+    // Ищем дополнительные импликанты в МДНФ
     let dopImplicants = []
     for (let i = 0; i < withoutCoreAndSimilar.length; i++) {
-        for (let j = 0; j < testARROBJ.length; j++) {
-            for (let key in testARROBJ[j]) {
+        for (let j = 0; j < coverageTable.length; j++) {
+            for (let key in coverageTable[j]) {
                 if (key === withoutCoreAndSimilar[i]) {
-                    for (let k = testARROBJ[j][key].length; k > 0; k--) {
-                        if (testARROBJ[j][key][k] === "+") {
+                    for (let k = coverageTable[j][key].length; k > 0; k--) {
+                        if (coverageTable[j][key][k] === "+") {
                             dopImplicants.push(result.foundPares[result.foundPares.length - 1][k])
                             break
                         }
@@ -202,11 +205,11 @@ export default function calc(amountImplicants, task) {
         }
     }
 
-    result.dopImplicants = dopImplicants
 
+    // Формируем результат
+    result.dopImplicants = dopImplicants
     result.core = findOnlyUnique(result.core)
     result.dopImplicants = findOnlyUnique(result.dopImplicants)
-
     result.mdnf = fromNumToLetterForFourImplicant(result.core.concat(result.dopImplicants))
     result.mdnf = result.mdnf.slice(0, result.mdnf.length - 3)
     result.resultArr = result.core.concat(result.dopImplicants)

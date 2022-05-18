@@ -1,4 +1,5 @@
 import s from './Calc.module.scss'
+import sharedStyles from '../shared/shared.module.scss'
 import calc from '../scripts/calc'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -31,7 +32,6 @@ function Calc() {
 
     setResult(resultObj)
     setCurrentStep(currentStep + 1)
-    console.log(resultObj)
   }
 
   return (
@@ -57,7 +57,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 1}>
           <section className={s["Calc-Section"]}>
             <h2>1. Формуємо таблицю істиності</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell>№</TableCell>
@@ -72,7 +72,7 @@ function Calc() {
                 {result.sourceTable.map((row, index) => (
                   <TableRow
                     key={index}
-                    className={(currentStep >= 2 && result.task[index] === 1) ? s["Calc-HightlightRow"] : ''}
+                    className={(currentStep >= 2 && result.task[index] === 1) ? sharedStyles["HightlightRow"] : ''}
                   >
                     <TableCell>{index}</TableCell>
                     <TableCell>{row[0]}</TableCell>
@@ -94,7 +94,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 2}>
           <section className={s["Calc-Section"]}>
             <h2>2. Шукаємо рядки там де F = 1</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell>№</TableCell>
@@ -131,9 +131,9 @@ function Calc() {
             <h2>3. Поки є моливість склеюємо рядки</h2>
             {result.foundPares.map((item, index) => {
               return (
-                <>
+                <div key={index}>
                   {index === 1 && <h3>И так далі <br></br>(+ видаляємо однакові імпліканти)</h3>}
-                  <Table className={s["Calc-Table"]} key={index}>
+                  <Table className={sharedStyles["Table"]} key={index}>
                     <TableHead>
                       <TableRow>
                         <TableCell>#</TableCell>
@@ -157,7 +157,7 @@ function Calc() {
                       ))}
                     </TableBody>
                   </Table>
-                </>
+                </div>
               )
             })}
 
@@ -171,7 +171,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 4}>
           <section className={s["Calc-Section"]}>
             <h2>4. Таблиця покриття</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -203,7 +203,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 5}>
           <section className={s["Calc-Section"]}>
             <h2>5. Знаходимо Ядро</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -219,7 +219,7 @@ function Calc() {
                     <TableCell className={
                       currentStep >= 5 &&
                         result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? s["Calc-HightlightCell"]
+                        ? sharedStyles["HightlightCell"]
                         : ''
                     }>{result.leftSideTablePokritiya[index]}</TableCell>
                     {row.reverse().map((col, index) => (
@@ -246,7 +246,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 6}>
           <section className={s["Calc-Section"]}>
             <h2>6. ?З'єднуємо?</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -262,7 +262,7 @@ function Calc() {
                     <TableCell className={
                       currentStep >= 5 &&
                         result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? s["Calc-HightlightCell"]
+                        ? sharedStyles["HightlightCell"]
                         : ''
                     }>
                       {result.leftSideTablePokritiya[index]}
@@ -273,7 +273,7 @@ function Calc() {
                           currentStep >= 6
                             && (result.coreArrIndexes.find(item => item === helperArrForTablePokritiya.findIndex(item => item === row)) >= 0)
                             && col === '+'
-                            ? s["Calc-HightlightCell"]
+                            ? sharedStyles["HightlightCell"]
                             : ''
                         }
                       >
@@ -294,7 +294,7 @@ function Calc() {
         <Slide direction="down" in={currentStep >= 7}>
           <section className={s["Calc-Section"]}>
             <h2>?Знаходимо останні /імпліканти/?</h2>
-            <Table className={s["Calc-Table"]}>
+            <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -310,7 +310,7 @@ function Calc() {
                     <TableCell className={
                       currentStep >= 5 &&
                         result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? s["Calc-HightlightCell"]
+                        ? sharedStyles["HightlightCell"]
                         : ''
                     }>
                       {result.leftSideTablePokritiya[index]}
@@ -321,7 +321,7 @@ function Calc() {
                           currentStep >= 6
                             && (result.coreArrIndexes.find(item => item === helperArrForTablePokritiya.findIndex(item => item === row)) >= 0)
                             && col === '+'
-                            ? s["Calc-HightlightCell"]
+                            ? sharedStyles["HightlightCell"]
                             : ''
                         }
                       >
@@ -352,10 +352,11 @@ function Calc() {
       {
         currentStep < 8 && currentStep >= 1 &&
         <Button
-          className={s["Calc-NextStepBtn"]}
+          className={sharedStyles["NextStepBtn"]}
           variant="contained"
           onClick={() => setCurrentStep(currentStep + 1)}
-        >Наступний крок
+        >
+          Наступний крок
         </Button>
       }
 

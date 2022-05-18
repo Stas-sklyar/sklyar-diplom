@@ -1,5 +1,5 @@
 import s from './Test.module.scss'
-import stylesCalc from '../Calc/Calc.module.scss'
+import sharedStyles from '../shared/shared.module.scss'
 import calc from '../scripts/calc'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -44,7 +44,7 @@ function Test() {
 
     const [result, setResult] = useState()
 
-    const [closeDialogIsOpen, setCloseDialogIsOpen] = useState(false);
+    const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     const startTest = () => {
         // if (studentName.length < 3) {
@@ -156,7 +156,7 @@ function Test() {
         setSelectedIndexOfImplicantsForUserCore(index)
     }
 
-    const hideImplicantOfUsrCoreItemActionsMenu = () => {
+    const hideImplicantOfUserCoreItemActionsMenu = () => {
         setSelectedIndexOfImplicantsForUserCore(-1)
     }
 
@@ -194,7 +194,7 @@ function Test() {
         if (next) {
             sendTest()
         }
-        setCloseDialogIsOpen(false)
+        setDialogIsOpen(false)
     }
 
     // SEND TEST AND CALC RESULT
@@ -210,7 +210,6 @@ function Test() {
         alert("Тест відправленно!")
         setTestFinished(true)
         setCurrentStep(0)
-        console.log(userResult)
     }
 
     return (
@@ -255,7 +254,7 @@ function Test() {
                 <section className={s["Test-Section"]}>
                     <h3>Ваше завдання: {task}</h3>
                     <h4>1. Перший крок: Формуємо таблицю істиності</h4>
-                    <Table className={stylesCalc["Calc-Table"]}>
+                    <Table className={sharedStyles["Table"]}>
                         <TableHead>
                             <TableRow>
                                 <TableCell>№</TableCell>
@@ -270,7 +269,7 @@ function Test() {
                             {result.sourceTable.map((row, index) => (
                                 <TableRow
                                     key={index}
-                                    className={(currentStep >= 2 && result.task[index] === 1) ? stylesCalc["Calc-HightlightRow"] : ''}
+                                    className={(currentStep >= 2 && result.task[index] === 1) ? sharedStyles["HightlightRow"] : ''}
                                 >
                                     <TableCell>{index}</TableCell>
                                     <TableCell>{row[0]}</TableCell>
@@ -290,7 +289,7 @@ function Test() {
                     <section className={s["Test-Section"]}>
                         <h3>2. Другий крок</h3>
                         <p>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
-                        <Table className={stylesCalc["Calc-Table"]}>
+                        <Table className={sharedStyles["Table"]}>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>№</TableCell>
@@ -452,7 +451,7 @@ function Test() {
                             <div key={index}
                                 className={s["Test-LastImplicantItem"]}
                                 onMouseEnter={() => openImplicantOfUsrCoreItemActionsMenu(index)}
-                                onMouseLeave={() => hideImplicantOfUsrCoreItemActionsMenu()}
+                                onMouseLeave={() => hideImplicantOfUserCoreItemActionsMenu()}
                             >
                                 <div>
                                     [{item.join(' - ')}]
@@ -485,8 +484,9 @@ function Test() {
                         type="text"
                     />
                     <div>
-                        {['a', 'b', 'c', 'd', '!', ' v '].map(item => (
+                        {['a', 'b', 'c', 'd', '!', ' v '].map((item, index) => (
                             <Button
+                                key={index}
                                 className={s["Test-SymbolBtn"]}
                                 variant="outlined"
                                 color="primary"
@@ -513,7 +513,7 @@ function Test() {
             {
                 currentStep < 6 && currentStep >= 1 &&
                 <Button
-                    className={stylesCalc["Calc-NextStepBtn"]}
+                    className={sharedStyles["NextStepBtn"]}
                     variant="contained"
                     onClick={() => setCurrentStep(currentStep + 1)}
                 >
@@ -523,9 +523,9 @@ function Test() {
             {
                 currentStep === 6 &&
                 <Button
-                    className={stylesCalc["Calc-NextStepBtn"]}
+                    className={sharedStyles["NextStepBtn"]}
                     variant="contained"
-                    onClick={() => setCloseDialogIsOpen(true)}
+                    onClick={() => setDialogIsOpen(true)}
                 >
                     Завершити тест
                 </Button>
@@ -621,8 +621,8 @@ function Test() {
 
 
             <Dialog
-                open={closeDialogIsOpen}
-                onClose={handleCloseDialog}
+                open={dialogIsOpen}
+                onClose={() => handleCloseDialog(false)}
             >
                 <DialogTitle>
                     {"Закінчити тест"}

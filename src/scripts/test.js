@@ -1,5 +1,3 @@
-import { fromNumToLetterForFourImplicant } from './fromNumToLetter'
-
 export default function handleTest(userAnswers, result) {
     let userResult = {
         step3: {
