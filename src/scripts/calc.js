@@ -1,7 +1,7 @@
 import findPares from './find-pares'
 import findOnlyUnique from './find-only-unique'
-import { sourceTableForFourImplicants } from './srcTables'
-import { fromNumToLetterForFourImplicant } from './fromNumToLetter'
+import { sourceTableForFourImplicants } from './src-table'
+import fromNumToLetterForFourImplicant from './from-num-to-letter'
 import sortByAmount from './sort-by-amount'
 
 export default function calc(amountOfImplicants, task) {

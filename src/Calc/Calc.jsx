@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useState } from 'react'
 import Divider from '@mui/material/Divider'
-import { rotateRight90 } from '../scripts/rotate-matrix'
+import rotateRight90 from '../scripts/rotate-matrix'
 import Slide from '@mui/material/Slide'
 
 function Calc() {
