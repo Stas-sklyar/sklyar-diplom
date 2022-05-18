@@ -17,6 +17,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import handleTest from '../scripts/test'
 import Divider from '@mui/material/Divider'
+import sendEmail from '../scripts/send-email'
 
 function Test() {
     const [testFinished, setTestFinished] = useState(false)
@@ -207,10 +208,13 @@ function Test() {
         }
         setUserResult(handleTest(userAnswers, result))
 
+        sendEmail()
         alert("Тест відправленно!")
         setTestFinished(true)
         setCurrentStep(0)
     }
+
+    // EMAIL FLOW
 
     return (
         <div className={s["Test"]}>
