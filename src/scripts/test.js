@@ -1,19 +1,20 @@
 export default function handleTest(userAnswers, result) {
     let userResult = {
-        step3: {
+        step1: {
             notFoundPares: [],
             mismatchedPairs: []
         },
+        step2: {
+            notFoundImplicants: [],
+            mismatchedImplicants: []
+        },
+        step3: {
+            notFoundImplicants: [],
+            mismatchedImplicants: []
+        },
         step4: {
-            notFoundImplicants: [],
-            mismatchedImplicants: []
-        },
-        step5: {
-            notFoundImplicants: [],
-            mismatchedImplicants: []
-        },
-        step6: {
-            amountOfMismatches: 0,
+            notFoundItemsOfMDNF: [],
+            mismatchedItemsOfMDNF: []
         }
     }
 
@@ -46,6 +47,9 @@ export default function handleTest(userAnswers, result) {
 
     let indexesForStep3 = result.foundParesIndexes.slice(0, result.foundPares[0].length)
 
+    result.mdnf = result.mdnf.split(' v ')
+    userAnswers.userMDNF = userAnswers.userMDNF.split(' v ')
+
     // STEP 3 -----------------
     let notFoundPares = []
     for (let i = 0; i < indexesForStep3.length; i++) {
@@ -64,8 +68,8 @@ export default function handleTest(userAnswers, result) {
             mismatchedPairs.push(userAnswers.selectedPairsOfImplicants[i])
         }
     }
-    userResult.step3.notFoundPares = notFoundPares
-    userResult.step3.mismatchedPairs = mismatchedPairs
+    userResult.step1.notFoundPares = notFoundPares
+    userResult.step1.mismatchedPairs = mismatchedPairs
 
     // STEP 4 ----------------
     let notFoundImplicants = []
@@ -86,8 +90,8 @@ export default function handleTest(userAnswers, result) {
         }
     }
 
-    userResult.step4.notFoundImplicants = notFoundImplicants
-    userResult.step4.mismatchedImplicants = mismatchedImplicants
+    userResult.step2.notFoundImplicants = notFoundImplicants
+    userResult.step2.mismatchedImplicants = mismatchedImplicants
 
 
     // STEP 5 ---------------
@@ -109,19 +113,32 @@ export default function handleTest(userAnswers, result) {
         }
     }
 
-    userResult.step5.notFoundImplicants = notFoundImplicantsOfCore
-    userResult.step5.mismatchedImplicants = mismatchedImplicantsOfCore
+    userResult.step3.notFoundImplicants = notFoundImplicantsOfCore
+    userResult.step3.mismatchedImplicants = mismatchedImplicantsOfCore
 
-    // STEP 6 -----------------
-    result.mdnf = result.mdnf.trim()
-    userAnswers.userMDNF = userAnswers.userMDNF.trim()
-
+    // STEP 6 ----------------
+    let notFoundItemsOfMDNF = []
     for (let i = 0; i < result.mdnf.length; i++) {
-        if (result.mdnf[i] !== userAnswers.userMDNF[i]) {
-            userResult.step6.amountOfMismatches += 1
+        let foundItemsOfMDNF = userAnswers.userMDNF
+            .find(item => item === result.mdnf[i])
+        if (!foundItemsOfMDNF) {
+            notFoundItemsOfMDNF.push(result.mdnf[i])
         }
     }
 
+    let mismatchedItemsOfMDNF = []
+    for (let i = 0; i < userAnswers.userMDNF.length; i++) {
+        let foundItemsOfMDNF = result.mdnf
+            .find(item => item === userAnswers.userMDNF[i])
+        if (!foundItemsOfMDNF) {
+            mismatchedItemsOfMDNF.push(userAnswers.userMDNF[i])
+        }
+    }
+
+    userResult.step4.notFoundItemsOfMDNF = notFoundItemsOfMDNF
+    userResult.step4.mismatchedItemsOfMDNF = mismatchedItemsOfMDNF
+
+    console.log(userResult)
 
     return userResult
 }

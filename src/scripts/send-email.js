@@ -18,27 +18,27 @@ export default function sendEmail() {
         userResultStep4MismatchedImplicants: '',
         userResultStep4MismatchedImplicantsPoint: '',
 
-        userResultStep4MismatchedImplicants: '',
-        userResultStep4MismatchedImplicantsPoint: '',
-
         userResultStep5NotFoundImplicants: '',
         userResultStep5NotFoundImplicantsPoint: '',
 
         userResultStep5MismatchedImplicants: '',
         userResultStep5MismatchedImplicantsPoint: '',
 
-        userResultStep6AmountOfMismatches: '',
-        userResultStep6AmountOfMismatchesPoint: ''
+        userResultStep6NotFoundImplicants: '',
+        userResultStep6NotFoundImplicantsPoint: '',
+
+        userResultStep6MismatchedImplicants: '',
+        userResultStep6MismatchedImplicantsPoint: '',
     }
 
     const serviceID = 'default_service'
     const templateID = 'template_46r38eo'
     const publicKey = 'eA6bsZM6VKoGI5h2z'
 
-    send(
-        serviceID,
-        templateID,
-        toSend,
-        publicKey
-    )
+    // send(
+    //     serviceID,
+    //     templateID,
+    //     toSend,
+    //     publicKey
+    // )
 }

@@ -538,12 +538,13 @@ function Test() {
             {testFinished &&
                 <section>
                     <h3>Ваш бал: x</h3>
-                    {userResult.step3.notFoundPares.length > 0 &&
+                    {userResult.step1.notFoundPares.length > 0 &&
                         <p>
-                            На третьому кроці ви не знайшли такі пари:<br></br>
-                            {userResult.step3.notFoundPares.map((item, index) => (
+                            На третьому кроці ви не знайшли такі пари:
+                            <br></br>
+                            {userResult.step1.notFoundPares.map((item, index) => (
                                 <span>[{item[0] + ' - ' + item[1]}]
-                                    {userResult.step3.notFoundPares.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step1.notFoundPares.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
                             <br></br>
@@ -551,35 +552,37 @@ function Test() {
                         </p>
                     }
 
-                    {userResult.step3.mismatchedPairs.length > 0 &&
+                    {userResult.step1.mismatchedPairs.length > 0 &&
                         <p>Також пари, які ви знайшли неправильно:
-                            <pre>{userResult.step3.mismatchedPairs.map((item, index) => (
+                            <br></br>
+                            {userResult.step1.mismatchedPairs.map((item, index) => (
                                 <span>[{item[0] + ' - ' + item[1]}]
-                                    {userResult.step3.mismatchedPairs.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step1.mismatchedPairs.length - 1 === index ? ' ' : ', '}
                                 </span>
-                            ))}</pre>
+                            ))}
+                            <br></br>
                             Через це ви одержуєте: -x баллів
                         </p>
                     }
                     <Divider />
-                    {userResult.step4.notFoundImplicants.length > 0 &&
+                    {userResult.step2.notFoundImplicants.length > 0 &&
                         <p>На четвертому кроці ви не знайшли такі імпліканти:
                             <br></br>
-                            {userResult.step4.notFoundImplicants.map((item, index) => (
+                            {userResult.step2.notFoundImplicants.map((item, index) => (
                                 <span>[{item}]
-                                    {userResult.step4.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
                             <br></br>
                             Через це ви одержуєте: -x баллів
                         </p>
                     }
-                    {userResult.step4.mismatchedImplicants.length > 0 &&
+                    {userResult.step2.mismatchedImplicants.length > 0 &&
                         <p>Також імпліканти, які ви знайшли неправильно:
                             <br></br>
-                            {userResult.step4.mismatchedImplicants.map((item, index) => (
+                            {userResult.step2.mismatchedImplicants.map((item, index) => (
                                 <span>[{item}]
-                                    {userResult.step4.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
                             <br></br>
@@ -587,24 +590,24 @@ function Test() {
                         </p>
                     }
                     <Divider />
-                    {userResult.step5.notFoundImplicants.length > 0 &&
+                    {userResult.step3.notFoundImplicants.length > 0 &&
                         <p>На п'ятому кроці ви не знайшли такі імпліканти, які належать до ядра:
                             <br></br>
-                            {userResult.step5.notFoundImplicants.map((item, index) => (
+                            {userResult.step3.notFoundImplicants.map((item, index) => (
                                 <span>[{item}]
-                                    {userResult.step5.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
                             <br></br>
                             Через це ви одержуєте: -x баллів
                         </p>
                     }
-                    {userResult.step5.mismatchedImplicants.length > 0 &&
+                    {userResult.step3.mismatchedImplicants.length > 0 &&
                         <p>Також імпліканти, які ви знайшли неправильно:
                             <br></br>
-                            {userResult.step5.mismatchedImplicants.map((item, index) => (
+                            {userResult.step3.mismatchedImplicants.map((item, index) => (
                                 <span>[{item}]
-                                    {userResult.step5.notFoundImplicants.length - 1 === index ? ' ' : ', '}
+                                    {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
                             <br></br>
@@ -613,10 +616,28 @@ function Test() {
                     }
 
                     <Divider />
-                    {userResult.step6.amountOfMismatches > 0 &&
-                        <p>На шостому кроці кількість помилок, які ви зробили в МДНФ:
-                            {`${userResult.step6.amountOfMismatches} шт.`}
-                            <p> Через це ви одержуєте: -x баллів</p>
+                    {userResult.step4.notFoundItemsOfMDNF.length > 0 &&
+                        <p>На щостому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
+                            <br></br>
+                            {userResult.step4.notFoundItemsOfMDNF.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step4.notFoundItemsOfMDNF.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
+                        </p>
+                    }
+                    {userResult.step4.mismatchedItemsOfMDNF.length > 0 &&
+                        <p>Також ?імпліканти?, які ви знайшли неправильно:
+                            <br></br>
+                            {userResult.step4.mismatchedItemsOfMDNF.map((item, index) => (
+                                <span>[{item}]
+                                    {userResult.step4.mismatchedItemsOfMDNF.length - 1 === index ? ' ' : ', '}
+                                </span>
+                            ))}
+                            <br></br>
+                            Через це ви одержуєте: -x баллів
                         </p>
                     }
 
