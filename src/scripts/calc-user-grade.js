@@ -11,10 +11,10 @@ export default function calcUserGrade(userResult, result) {
         userGradeForStep4: totalGradeForStep4,
     }
 
-    let amounOfCorrectAnswerForStep1 = result.foundParesIndexes.slice(0, result.foundPares[0]).length
+    let amounOfCorrectAnswerForStep1 = result.foundPares[0].length
     let amounOfCorrectAnswerForStep2 = result.leftSideTablePokritiya.length
     let amounOfCorrectAnswerForStep3 = result.core.length
-    let amounOfCorrectAnswerForStep4 = result.mdnf.split(' v ').length
+    let amounOfCorrectAnswerForStep4 = result.mdnf.length
 
     let priceOfAnswerForStep1 = totalGradeForStep1 / amounOfCorrectAnswerForStep1
     let priceOfAnswerForStep2 = totalGradeForStep2 / amounOfCorrectAnswerForStep2
@@ -44,6 +44,7 @@ export default function calcUserGrade(userResult, result) {
 
 
     for (let key in resultOfGrade) {
+        resultOfGrade[key] = Math.round(resultOfGrade[key])
         if (resultOfGrade[key] < 0) {
             resultOfGrade[key] = 0
         }
