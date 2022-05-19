@@ -2,6 +2,9 @@ import calcUserGrade from './calc-user-grade'
 
 export default function handleTest(userAnswers, result) {
     let userResult = {
+        studentName: userAnswers.studentName,
+        studentGroup: userAnswers.studentGroup,
+        
         step1: {
             notFoundPares: [],
             mismatchedPairs: []

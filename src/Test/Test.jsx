@@ -204,11 +204,14 @@ function Test() {
             selectedPairsOfImplicants,
             selectedLastImplicants,
             userCore: selectedImplicantsOfUserCore,
-            userMDNF
+            userMDNF,
+            studentName,
+            studentGroup,
         }
-        setUserResult(handleTest(userAnswers, result))
+        let userResult = handleTest(userAnswers, result)
+        setUserResult(userResult)
 
-        sendEmail()
+        sendEmail(userResult)
         alert("Тест відправленно!")
         setTestFinished(true)
         setCurrentStep(0)
@@ -257,7 +260,7 @@ function Test() {
             {currentStep >= 1 &&
                 <section className={s["Test-Section"]}>
                     <h3>Ваше завдання: {task}</h3>
-                    <h4>1. Перший крок: Формуємо таблицю істиності</h4>
+                    <h4>Формуємо таблицю істиності</h4>
                     <Table className={sharedStyles["Table"]}>
                         <TableHead>
                             <TableRow>
@@ -291,7 +294,6 @@ function Test() {
             {currentStep >= 2 &&
                 <Slide direction="down" in={currentStep >= 2}>
                     <section className={s["Test-Section"]}>
-                        <h3>2. Другий крок</h3>
                         <p>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
                         <Table className={sharedStyles["Table"]}>
                             <TableHead>
@@ -323,7 +325,7 @@ function Test() {
 
             {currentStep >= 3 &&
                 <section className={s["Test-Section"]}>
-                    <h3>3. Третій крок</h3>
+                    <h3>1. Крок</h3>
 
                     <div>
                         <p>Введіть в поле номера імплікант які ми повинні склеяти</p>
@@ -375,10 +377,10 @@ function Test() {
             {
                 currentStep >= 4 &&
                 <section className={s["Test-Section"]}>
-                    <h3>4. Четвертий крок</h3>
+                    <h3>2. Другий Крок</h3>
+                    <p>Результат склейки + імпліканти які не склеялись ні з чим</p>
 
                     <div>
-                        <p>Результат склейки + імпліканти які не склеялись ні з чим</p>
                         <div className={s["Test-AddItemForm"]}>
                             <TextField
                                 value={lastImplicants}
@@ -427,7 +429,7 @@ function Test() {
             {
                 currentStep >= 5 &&
                 <section className={s["Test-Section"]}>
-                    <h3>5. П'ятий крок</h3>
+                    <h3>3. Третій крок</h3>
                     <p>Введіть ядро в форматі - [[1,0,x,1], [0,1,x,0]]</p>
 
                     <div className={s["Test-AddItemForm"]}>
@@ -477,8 +479,9 @@ function Test() {
             {
                 currentStep >= 6 &&
                 <section className={s["Test-Section"]}>
-                    <h3>6. Шостий крок</h3>
+                    <h3>4. Четвертий крок</h3>
                     <p>Введіть МДНФ в форматі - ab!c v b!c</p>
+
                     <TextField
                         value={userMDNF}
                         className={s["Test-ThirdStepTextField"]}
@@ -537,10 +540,11 @@ function Test() {
 
             {testFinished &&
                 <section>
-                    <h3>Ваш бал: x</h3>
+                    <h3>Ваш бал: {userResult.userGrade.totalResult}</h3>
+
                     {userResult.step1.notFoundPares.length > 0 &&
                         <p>
-                            На третьому кроці ви не знайшли такі пари:
+                            На першому кроці ви не знайшли такі пари:
                             <br></br>
                             {userResult.step1.notFoundPares.map((item, index) => (
                                 <span>[{item[0] + ' - ' + item[1]}]
@@ -560,12 +564,12 @@ function Test() {
                             ))}
                         </p>
                     }
-                    <p>За третій крок ви отримуєте - {userResult.userGrade.userGradeForStep1} балів із 30</p>
+                    <p>За перший крок ви отримуєте - {userResult.userGrade.userGradeForStep1} балів із 30</p>
                     <Divider />
 
 
                     {userResult.step2.notFoundImplicants.length > 0 &&
-                        <p>На четвертому кроці ви не знайшли такі імпліканти:
+                        <p>На другому кроці ви не знайшли такі імпліканти:
                             <br></br>
                             {userResult.step2.notFoundImplicants.map((item, index) => (
                                 <span>[{item}]
@@ -584,12 +588,12 @@ function Test() {
                             ))}
                         </p>
                     }
-                    <p>За четвертий крок ви отримуєте - {userResult.userGrade.userGradeForStep2} балів із 25</p>
+                    <p>За другий крок ви отримуєте - {userResult.userGrade.userGradeForStep2} балів із 25</p>
                     <Divider />
 
 
                     {userResult.step3.notFoundImplicants.length > 0 &&
-                        <p>На п'ятому кроці ви не знайшли такі імпліканти, які належать до ядра:
+                        <p>На третьому кроці ви не знайшли такі імпліканти, які належать до ядра:
                             <br></br>
                             {userResult.step3.notFoundImplicants.map((item, index) => (
                                 <span>[{item}]
@@ -608,12 +612,12 @@ function Test() {
                             ))}
                         </p>
                     }
-                    <p>За п'ятий крок ви отримуєте - {userResult.userGrade.userGradeForStep3} балів із 25</p>
+                    <p>За третій крок ви отримуєте - {userResult.userGrade.userGradeForStep3} балів із 25</p>
                     <Divider />
 
 
                     {userResult.step4.notFoundItemsOfMDNF.length > 0 &&
-                        <p>На щостому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
+                        <p>На четвертому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
                             <br></br>
                             {userResult.step4.notFoundItemsOfMDNF.map((item, index) => (
                                 <span>[{item}]
@@ -632,7 +636,7 @@ function Test() {
                             ))}
                         </p>
                     }
-                    <p>За шостий крок ви отримуєте - {userResult.userGrade.userGradeForStep4} балів із 25</p>
+                    <p>За четвертий крок ви отримуєте - {userResult.userGrade.userGradeForStep4} балів із 25</p>
 
                 </section>
             }

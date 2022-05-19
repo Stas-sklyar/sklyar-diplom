@@ -43,12 +43,16 @@ export default function calcUserGrade(userResult, result) {
         resultOfGrade.userGradeForStep4 - (userResult.step4.mismatchedItemsOfMDNF.length * (priceOfAnswerForStep4 / 2))
 
 
+    let totalResult = 0
     for (let key in resultOfGrade) {
         resultOfGrade[key] = Math.round(resultOfGrade[key])
         if (resultOfGrade[key] < 0) {
             resultOfGrade[key] = 0
         }
+        totalResult += resultOfGrade[key]
     }
+
+    resultOfGrade = { ...resultOfGrade, totalResult }
 
     return resultOfGrade
 }
