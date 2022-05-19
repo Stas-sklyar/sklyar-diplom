@@ -547,8 +547,6 @@ function Test() {
                                     {userResult.step1.notFoundPares.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
 
@@ -560,11 +558,12 @@ function Test() {
                                     {userResult.step1.mismatchedPairs.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
+                    <p>За третій крок ви отримуєте - {userResult.userGrade.userGradeForStep1} балів із 30</p>
                     <Divider />
+
+
                     {userResult.step2.notFoundImplicants.length > 0 &&
                         <p>На четвертому кроці ви не знайшли такі імпліканти:
                             <br></br>
@@ -573,8 +572,6 @@ function Test() {
                                     {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
                     {userResult.step2.mismatchedImplicants.length > 0 &&
@@ -585,11 +582,12 @@ function Test() {
                                     {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
+                    <p>За четвертий крок ви отримуєте - {userResult.userGrade.userGradeForStep2} балів із 25</p>
                     <Divider />
+
+
                     {userResult.step3.notFoundImplicants.length > 0 &&
                         <p>На п'ятому кроці ви не знайшли такі імпліканти, які належать до ядра:
                             <br></br>
@@ -598,8 +596,6 @@ function Test() {
                                     {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
                     {userResult.step3.mismatchedImplicants.length > 0 &&
@@ -610,12 +606,12 @@ function Test() {
                                     {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
-
+                    <p>За п'ятий крок ви отримуєте - {userResult.userGrade.userGradeForStep3} балів із 25</p>
                     <Divider />
+
+
                     {userResult.step4.notFoundItemsOfMDNF.length > 0 &&
                         <p>На щостому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
                             <br></br>
@@ -624,8 +620,6 @@ function Test() {
                                     {userResult.step4.notFoundItemsOfMDNF.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
                     {userResult.step4.mismatchedItemsOfMDNF.length > 0 &&
@@ -636,10 +630,9 @@ function Test() {
                                     {userResult.step4.mismatchedItemsOfMDNF.length - 1 === index ? ' ' : ', '}
                                 </span>
                             ))}
-                            <br></br>
-                            Через це ви одержуєте: -x баллів
                         </p>
                     }
+                    <p>За шостий крок ви отримуєте - {userResult.userGrade.userGradeForStep4} балів із 25</p>
 
                 </section>
             }

@@ -18,7 +18,7 @@ export default function handleTest(userAnswers, result) {
             notFoundItemsOfMDNF: [],
             mismatchedItemsOfMDNF: []
         },
-        userRating: {
+        userGrade: {
 
         }
     }
@@ -144,8 +144,8 @@ export default function handleTest(userAnswers, result) {
     userResult.step4.mismatchedItemsOfMDNF = mismatchedItemsOfMDNF
 
     // CALC USER RATING
-    userResult.userRating = calcUserGrade(userResult, result)
-    console.log(result)
+    userResult.userGrade = calcUserGrade(userResult, result)
+    console.log(userResult.userGrade)
 
     return userResult
 }
