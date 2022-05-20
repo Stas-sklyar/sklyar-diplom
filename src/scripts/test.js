@@ -53,24 +53,24 @@ export default function handleTest(userAnswers, result) {
         userAnswers.userCore[i] = [...parsedItem]
     }
 
-    let indexesForStep3 = result.foundParesIndexes.slice(0, result.foundPares[0].length)
+    let indexesForStep1 = result.foundParesIndexes.slice(0, result.foundPares[0].length)
 
     result.mdnf = result.mdnf.split(' v ')
     userAnswers.userMDNF = userAnswers.userMDNF.split(' v ')
 
-    // STEP 3 -----------------
+    // STEP 1 -----------------
     let notFoundPares = []
-    for (let i = 0; i < indexesForStep3.length; i++) {
+    for (let i = 0; i < indexesForStep1.length; i++) {
         let pairFound = userAnswers.selectedPairsOfImplicants
-            .find(item => item.join('') === indexesForStep3[i].join(''))
+            .find(item => item.join('') === indexesForStep1[i].join(''))
         if (!pairFound) {
-            notFoundPares.push(indexesForStep3[i])
+            notFoundPares.push(indexesForStep1[i])
         }
     }
 
     let mismatchedPairs = []
     for (let i = 0; i < userAnswers.selectedPairsOfImplicants.length; i++) {
-        let pairFound = indexesForStep3
+        let pairFound = indexesForStep1
             .find(item => item.join('') === userAnswers.selectedPairsOfImplicants[i].join(''))
         if (!pairFound) {
             mismatchedPairs.push(userAnswers.selectedPairsOfImplicants[i])
@@ -79,7 +79,7 @@ export default function handleTest(userAnswers, result) {
     userResult.step1.notFoundPares = notFoundPares
     userResult.step1.mismatchedPairs = mismatchedPairs
 
-    // STEP 4 ----------------
+    // STEP 2 ----------------
     let notFoundImplicants = []
     for (let i = 0; i < result.leftSideTablePokritiya.length; i++) {
         let implicantFound = userAnswers.selectedLastImplicants
@@ -102,7 +102,7 @@ export default function handleTest(userAnswers, result) {
     userResult.step2.mismatchedImplicants = mismatchedImplicants
 
 
-    // STEP 5 ---------------
+    // STEP 3 ---------------
     let notFoundImplicantsOfCore = []
     for (let i = 0; i < result.core.length; i++) {
         let implicantOfCoreFound = userAnswers.userCore
@@ -124,7 +124,7 @@ export default function handleTest(userAnswers, result) {
     userResult.step3.notFoundImplicants = notFoundImplicantsOfCore
     userResult.step3.mismatchedImplicants = mismatchedImplicantsOfCore
 
-    // STEP 6 ----------------
+    // STEP 4 ----------------
     let notFoundItemsOfMDNF = []
     for (let i = 0; i < result.mdnf.length; i++) {
         let foundItemsOfMDNF = userAnswers.userMDNF
