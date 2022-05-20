@@ -1,4 +1,5 @@
 import { send } from 'emailjs-com'
+import { SERVICE_ID, MAIN_TEMPLATE_ID, PUBLIC_KEY } from '../config'
 
 export default function sendEmail(userResult) {
     const toSend = {
@@ -23,14 +24,10 @@ export default function sendEmail(userResult) {
         step4Grade: userResult.userGrade.userGradeForStep4,
     }
 
-    const serviceID = 'default_service'
-    const templateID = 'template_46r38eo'
-    const publicKey = 'eA6bsZM6VKoGI5h2z'
-
-    send(
-        serviceID,
-        templateID,
-        toSend,
-        publicKey
-    )
+    // send(
+    //     SERVICE_ID,
+    //     MAIN_TEMPLATE_ID,
+    //     toSend,
+    //     PUBLIC_KEY
+    // )
 }

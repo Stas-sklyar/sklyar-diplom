@@ -148,7 +148,6 @@ export default function handleTest(userAnswers, result) {
 
     // CALC USER RATING
     userResult.userGrade = calcUserGrade(userResult, result)
-    console.log(userResult.userGrade)
 
     return userResult
 }
