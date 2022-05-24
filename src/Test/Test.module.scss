@@ -21,8 +21,7 @@
         margin-bottom: 20px;
     }
 
-    &-PairItem,
-    &-LastImplicantItem {
+    &-AddedItem {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -55,7 +54,7 @@ div.Test-TextField {
     margin: 15px 0;
 }
 
-div.Test-ThirdStepTextField {
+div.Test-AddItemTextField {
     width: 270px;
     margin-right: 20px;
 }
@@ -66,5 +65,40 @@ button.Test-SymbolBtn {
 
     &:last-child {
         margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .Test {
+
+        &-Section {
+            padding: 25px 15px;
+        }
+
+        &-Form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 15px;
+        }
+
+        &-AddItemForm {
+            flex-direction: column;
+        }
+
+    }
+
+    div.Test-TextField {
+        width: 200px;
+    }
+
+    div.Test-AddItemTextField {
+        width: 200px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    button.Test-SymbolBtn {
+        margin: 15px 10px 0 0;
     }
 }

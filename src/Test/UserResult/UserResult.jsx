@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider'
 function UserResult({ userResult }) {
 
     return (
-        <section>
+        <section className={s["Test-Section"]}>
             <h3>Ваш бал: {userResult.userGrade.totalResult}</h3>
 
             {userResult.step1.notFoundPares.length > 0 &&

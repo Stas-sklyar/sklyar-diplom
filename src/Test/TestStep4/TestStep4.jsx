@@ -54,7 +54,7 @@ function TestStep4({ selectedLastImplicants, setSelectedLastImplicants }) {
                     <TextField
                         value={lastImplicants}
                         onChange={e => handleLastImplicant(e.target.value)}
-                        className={s["Test-ThirdStepTextField"]}
+                        className={s["Test-AddItemTextField"]}
                         label="Введіть імпліканту"
                         variant="outlined"
                         size='small'
@@ -73,7 +73,7 @@ function TestStep4({ selectedLastImplicants, setSelectedLastImplicants }) {
                 <div>
                     {selectedLastImplicants.map((item, index) => (
                         <div key={index}
-                            className={s["Test-LastImplicantItem"]}
+                            className={s["Test-AddedItem"]}
                             onMouseEnter={() => openLastImplicantItemActionsMenu(index)}
                             onMouseLeave={() => hideLastImplicantItemActionsMenu()}
                         >

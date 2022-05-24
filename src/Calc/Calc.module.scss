@@ -22,3 +22,23 @@ div.Calc-TextField {
     width: 300px;
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 425px) {
+    div.Calc-TextField {
+        width: 200px;
+    }
+
+    .Calc {
+        &-Section {
+            padding: 20px 15px;
+
+            &--Scrollable {
+                overflow-x: scroll;
+            }
+
+            &>hr {
+                width: 100%;
+            }
+        }
+    }
+}

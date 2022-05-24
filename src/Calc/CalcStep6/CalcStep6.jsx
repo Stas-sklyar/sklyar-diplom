@@ -12,7 +12,7 @@ function CalcStep6({ result, currentStep, helperArrForTablePokritiya }) {
 
     return (
         <Slide direction="down" in={currentStep >= 6}>
-            <section className={s["Calc-Section"]}>
+            <section className={s["Calc-Section"] + " " + s["Calc-Section--Scrollable"]}>
                 <h2>6. ?З'єднуємо?</h2>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>

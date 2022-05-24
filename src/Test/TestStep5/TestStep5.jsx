@@ -53,7 +53,7 @@ function TestStep5({ selectedImplicantsOfUserCore, setSelectedImplicantsOfUserCo
                 <TextField
                     value={implicantOfUserCore}
                     onChange={e => handleUserCore(e.target.value)}
-                    className={s["Test-ThirdStepTextField"]}
+                    className={s["Test-AddItemTextField"]}
                     label="Введіть імпліканту"
                     variant="outlined"
                     size='small'
@@ -72,7 +72,7 @@ function TestStep5({ selectedImplicantsOfUserCore, setSelectedImplicantsOfUserCo
             <div>
                 {selectedImplicantsOfUserCore.map((item, index) => (
                     <div key={index}
-                        className={s["Test-LastImplicantItem"]}
+                        className={s["Test-AddedItem"]}
                         onMouseEnter={() => openImplicantOfUsrCoreItemActionsMenu(index)}
                         onMouseLeave={() => hideImplicantOfUserCoreItemActionsMenu()}
                     >

@@ -47,7 +47,7 @@ function TestStep3({ selectedPairsOfImplicants, setSelectedPairsOfImplicants }) 
                     <TextField
                         value={implicantPair}
                         onChange={e => handleImplicantPair(e.target.value)}
-                        className={s["Test-ThirdStepTextField"]}
+                        className={s["Test-AddItemTextField"]}
                         label="Введіть індекси пар імплікант"
                         variant="outlined"
                         size="small"
@@ -67,7 +67,7 @@ function TestStep3({ selectedPairsOfImplicants, setSelectedPairsOfImplicants }) 
                     {selectedPairsOfImplicants.map((item, index) => (
                         <div
                             key={index}
-                            className={s["Test-PairItem"]}
+                            className={s["Test-AddedItem"]}
                             onMouseEnter={() => openPairItemActionsMenu(index)}
                             onMouseLeave={() => hidePairItemActionsMenu()}
                         >

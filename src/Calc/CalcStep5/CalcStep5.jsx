@@ -12,7 +12,7 @@ function CalcStep5({ result, currentStep, helperArrForTablePokritiya }) {
 
     return (
         <Slide direction="down" in={currentStep >= 5}>
-            <section className={s["Calc-Section"]}>
+            <section className={s["Calc-Section"] + " " + s["Calc-Section--Scrollable"]}>
                 <h2>5. Знаходимо Ядро</h2>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
