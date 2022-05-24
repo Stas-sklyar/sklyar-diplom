@@ -2,23 +2,20 @@ import s from './Test.module.scss'
 import sharedStyles from '../shared/shared.module.scss'
 import calc from '../scripts/calc'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import { useState, useEffect } from 'react'
-import Slide from '@mui/material/Slide'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
 import handleTest from '../scripts/test'
-import Divider from '@mui/material/Divider'
 import sendEmail from '../scripts/send-email'
 import sendEmailAfterFailedTest from '../scripts/send-email-after-failed-test'
+import FinishTestDialog from './FinishTestDialog/FinishTestDialog'
+import TestFailedAfterStep1 from './TestFailedAfterStep1/TestFailedAfterStep1'
+import TestForm from './TestForm/TestForm'
+import UserResult from './UserResult/UserResult'
+import TestStep1 from './TestStep1/TestStep1'
+import TestStep2 from './TestStep2/TestStep2'
+import TestStep3 from './TestStep3/TestStep3'
+import TestStep4 from './TestStep4/TestStep4'
+import TestStep5 from './TestStep5/TestStep5'
+import TestStep6 from './TestStep6/TestStep6'
 
 function Test() {
     const [testFinished, setTestFinished] = useState(false)
@@ -28,20 +25,12 @@ function Test() {
 
     const [seconds, setSeconds] = useState(600)
     const [timerActive, setTimerActive] = useState(false)
-
     const [currentStep, setCurrentStep] = useState(0)
 
     const [task, setTask] = useState('0000100011111011')
-
-    const [implicantPair, setImplicantPair] = useState('')
     const [selectedPairsOfImplicants, setSelectedPairsOfImplicants] = useState([])
-
-    const [lastImplicants, setLastImplicants] = useState('')
     const [selectedLastImplicants, setSelectedLastImplicants] = useState([])
-
-    const [implicantOfUserCore, setImplicantOfUserCore] = useState('')
     const [selectedImplicantsOfUserCore, setSelectedImplicantsOfUserCore] = useState([])
-
     const [userMDNF, setUserMDNF] = useState('')
 
     const [result, setResult] = useState()
@@ -76,120 +65,6 @@ function Test() {
             setTimerActive(false)
         }
     }, [seconds, timerActive])
-
-    // STEP 1 ------------------
-    const [selectedIndexOfPairItem, setSelectedIndexOfPairItem] = useState(-1)
-
-    const openPairItemActionsMenu = (index) => {
-        setSelectedIndexOfPairItem(index)
-    }
-
-    const hidePairItemActionsMenu = () => {
-        setSelectedIndexOfPairItem(-1)
-    }
-
-    const deletePairOfImplicant = (index) => {
-        let newArr = selectedPairsOfImplicants
-        newArr.splice(index, 1)
-        setSelectedPairsOfImplicants([...newArr])
-    }
-
-    const handleImplicantPair = (value) => {
-        if (!(value.length > 2)) {
-            setImplicantPair(value)
-        }
-    }
-
-    const handleAddImplicantPair = (implicantPair) => {
-        if (implicantPair.length !== 2) {
-            return
-        }
-        let newArr = selectedPairsOfImplicants
-        newArr.push([implicantPair[0], implicantPair[1]])
-        setSelectedPairsOfImplicants([...newArr])
-        setImplicantPair('')
-    }
-
-
-    // STEP 2 ------------------
-    const [selectedIndexOfLastImplicantItem, setSelectedIndexOfLastImplicantItem] = useState(-1)
-
-    const openLastImplicantItemActionsMenu = (index) => {
-        setSelectedIndexOfLastImplicantItem(index)
-    }
-
-    const hideLastImplicantItemActionsMenu = () => {
-        setSelectedIndexOfLastImplicantItem(-1)
-    }
-
-    const deleteLastImplicantItem = (index) => {
-        let newArr = selectedLastImplicants
-        newArr.splice(index, 1)
-        setSelectedLastImplicants([...newArr])
-    }
-
-    const handleLastImplicant = (value) => {
-        if (
-            !(value.length > 4) &&
-            (
-                value[value.length - 1] === '1' ||
-                value[value.length - 1] === '0' ||
-                value[value.length - 1] === 'x'
-            )
-        ) {
-            setLastImplicants(value)
-        }
-    }
-
-    const handleAddLastImplicant = (lastImplicants) => {
-        if (lastImplicants.length !== 4) {
-            return
-        }
-        let newArr = selectedLastImplicants
-        newArr.push([lastImplicants])
-        setSelectedLastImplicants([...newArr])
-        setLastImplicants('')
-    }
-
-    // STEP 3 ------------------
-    const [selectedIndexOfImplicantsForUserCore, setSelectedIndexOfImplicantsForUserCore] = useState(-1)
-
-    const openImplicantOfUsrCoreItemActionsMenu = (index) => {
-        setSelectedIndexOfImplicantsForUserCore(index)
-    }
-
-    const hideImplicantOfUserCoreItemActionsMenu = () => {
-        setSelectedIndexOfImplicantsForUserCore(-1)
-    }
-
-    const deleteImplicantOfUserCoreItem = (index) => {
-        let newArr = selectedImplicantsOfUserCore
-        newArr.splice(index, 1)
-        setSelectedImplicantsOfUserCore([...newArr])
-    }
-
-    const handleUserCore = (value) => {
-        if (
-            !(value.length > 4) &&
-            (
-                value[value.length - 1] === '1' ||
-                value[value.length - 1] === '0' ||
-                value[value.length - 1] === 'x'
-            )
-        ) {
-            setImplicantOfUserCore(value)
-        }
-    }
-
-    const handleAddImplicantOfCore = (implicantOfUserCore) => {
-        if (implicantOfUserCore.length !== 4) {
-            return
-        }
-        let newArr = selectedImplicantsOfUserCore
-        newArr.push([implicantOfUserCore])
-        setSelectedImplicantsOfUserCore([...newArr])
-        setImplicantOfUserCore('')
-    }
 
     // CLOSE TEST ------------------
     const handleCloseDialog = (next) => {
@@ -261,288 +136,50 @@ function Test() {
             }
 
             {currentStep === 0 && !testFinished &&
-                <form className={s["Test-Form"]}>
-                    <TextField
-                        value={studentName}
-                        onChange={e => setStudentName(e.target.value)}
-                        className={s["Test-TextField"]}
-                        label="Введіть ПІБ"
-                        variant="outlined"
-                    />
-                    <TextField
-                        value={studentGroup}
-                        onChange={e => setStudentGroup(e.target.value)}
-                        className={s["Test-TextField"]}
-                        label="Введіть группу"
-                        variant="outlined"
-                    />
-                    <Button
-                        className={s["Test-StartBtn"]}
-                        variant="contained"
-                        onClick={() => startTest()}
-                    >
-                        Почати тест
-                    </Button>
-                </form>
+                <TestForm
+                    studentName={studentName}
+                    studentGroup={studentGroup}
+                    setStudentName={setStudentName}
+                    setStudentGroup={setStudentGroup}
+                    startTest={startTest}
+                />
             }
 
             {currentStep >= 1 &&
-                <section className={s["Test-Section"]}>
-                    <h3>Ваше завдання: {task}</h3>
-                    <h4>Формуємо таблицю істиності</h4>
-                    <Table className={sharedStyles["Table"]}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>№</TableCell>
-                                <TableCell>a</TableCell>
-                                <TableCell>b</TableCell>
-                                <TableCell>c</TableCell>
-                                <TableCell>d</TableCell>
-                                <TableCell>F</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {result.sourceTable.map((row, index) => (
-                                <TableRow
-                                    key={index}
-                                    className={(currentStep >= 2 && result.task[index] === 1) ? sharedStyles["HightlightRow"] : ''}
-                                >
-                                    <TableCell>{index}</TableCell>
-                                    <TableCell>{row[0]}</TableCell>
-                                    <TableCell>{row[1]}</TableCell>
-                                    <TableCell>{row[2]}</TableCell>
-                                    <TableCell>{row[3]}</TableCell>
-                                    <TableCell>{result.task[index]}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </section>
+                <TestStep1
+                    result={result}
+                    currentStep={currentStep}
+                    task={task}
+                />
             }
 
             {currentStep >= 2 &&
-                <Slide direction="down" in={currentStep >= 2}>
-                    <section className={s["Test-Section"]}>
-                        <p>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
-                        <Table className={sharedStyles["Table"]}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>№</TableCell>
-                                    <TableCell>a</TableCell>
-                                    <TableCell>b</TableCell>
-                                    <TableCell>c</TableCell>
-                                    <TableCell>d</TableCell>
-                                    <TableCell>F</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {result.tableOnlyTrue.map((row, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{index}</TableCell>
-                                        <TableCell>{row[0]}</TableCell>
-                                        <TableCell>{row[1]}</TableCell>
-                                        <TableCell>{row[2]}</TableCell>
-                                        <TableCell>{row[3]}</TableCell>
-                                        <TableCell>1</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </section>
-                </Slide>
+                <TestStep2 result={result} currentStep={currentStep} />
             }
 
             {currentStep >= 3 &&
-                <section className={s["Test-Section"]}>
-                    <h3>1. Крок</h3>
-
-                    <div>
-                        <p>Введіть в поле номера імплікант які ми повинні склеяти</p>
-                        <div className={s["Test-AddItemForm"]}>
-                            <TextField
-                                value={implicantPair}
-                                onChange={e => handleImplicantPair(e.target.value)}
-                                className={s["Test-ThirdStepTextField"]}
-                                label="Введіть індекси пар імплікант"
-                                variant="outlined"
-                                size="small"
-                                type="number"
-                            />
-                            <Button
-                                variant="outlined"
-                                color="success"
-                                onClick={() => handleAddImplicantPair(implicantPair)}
-                                size="small"
-                            >
-                                Додати пару
-                            </Button>
-                        </div>
-
-                        <div>
-                            {selectedPairsOfImplicants.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className={s["Test-PairItem"]}
-                                    onMouseEnter={() => openPairItemActionsMenu(index)}
-                                    onMouseLeave={() => hidePairItemActionsMenu()}
-                                >
-                                    <div>
-                                        [{item.join(' - ')}]
-                                        {index !== selectedPairsOfImplicants.length - 1 ? ',' : ' '}
-                                    </div>
-                                    <div
-                                        className={s["ActionsMenu"] + " " + ((index === selectedIndexOfPairItem) ? s["ActionsMenu--Active"] : '')}
-                                        onClick={() => deletePairOfImplicant(index)}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section >
+                <TestStep3
+                    selectedPairsOfImplicants={selectedPairsOfImplicants}
+                    setSelectedPairsOfImplicants={setSelectedPairsOfImplicants}
+                />
             }
 
-            {
-                currentStep >= 4 &&
-                <section className={s["Test-Section"]}>
-                    <h3>2. Другий Крок</h3>
-                    <p>Результат склейки + імпліканти які не склеялись ні з чим</p>
-
-                    <div>
-                        <div className={s["Test-AddItemForm"]}>
-                            <TextField
-                                value={lastImplicants}
-                                onChange={e => handleLastImplicant(e.target.value)}
-                                className={s["Test-ThirdStepTextField"]}
-                                label="Введіть імпліканту"
-                                variant="outlined"
-                                size='small'
-                                type="text"
-                            />
-                            <Button
-                                variant="outlined"
-                                color="success"
-                                onClick={() => handleAddLastImplicant(lastImplicants)}
-                                size='small'
-                            >
-                                Додати імпліканту
-                            </Button>
-                        </div>
-
-                        <div>
-                            {selectedLastImplicants.map((item, index) => (
-                                <div key={index}
-                                    className={s["Test-LastImplicantItem"]}
-                                    onMouseEnter={() => openLastImplicantItemActionsMenu(index)}
-                                    onMouseLeave={() => hideLastImplicantItemActionsMenu()}
-                                >
-                                    <div>
-                                        [{item.join(' - ')}]
-                                        {index !== selectedLastImplicants.length - 1 ? ',' : ' '}
-                                    </div>
-
-                                    <div
-                                        className={s["ActionsMenu"] + " " + ((index === selectedIndexOfLastImplicantItem) ? s["ActionsMenu--Active"] : '')}
-                                        onClick={() => deleteLastImplicantItem(index)}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+            {currentStep >= 4 &&
+                <TestStep4
+                    selectedLastImplicants={selectedLastImplicants}
+                    setSelectedLastImplicants={setSelectedLastImplicants}
+                />
             }
 
-            {
-                currentStep >= 5 &&
-                <section className={s["Test-Section"]}>
-                    <h3>3. Третій крок</h3>
-                    <p>Введіть ядро в форматі - [[1,0,x,1], [0,1,x,0]]</p>
-
-                    <div className={s["Test-AddItemForm"]}>
-                        <TextField
-                            value={implicantOfUserCore}
-                            onChange={e => handleUserCore(e.target.value)}
-                            className={s["Test-ThirdStepTextField"]}
-                            label="Введіть імпліканту"
-                            variant="outlined"
-                            size='small'
-                            type="text"
-                        />
-                        <Button
-                            variant="outlined"
-                            color="success"
-                            onClick={() => handleAddImplicantOfCore(implicantOfUserCore)}
-                            size='small'
-                        >
-                            Додати імпліканту
-                        </Button>
-                    </div>
-
-                    <div>
-                        {selectedImplicantsOfUserCore.map((item, index) => (
-                            <div key={index}
-                                className={s["Test-LastImplicantItem"]}
-                                onMouseEnter={() => openImplicantOfUsrCoreItemActionsMenu(index)}
-                                onMouseLeave={() => hideImplicantOfUserCoreItemActionsMenu()}
-                            >
-                                <div>
-                                    [{item.join(' - ')}]
-                                    {index !== selectedImplicantsOfUserCore.length - 1 ? ',' : ' '}
-                                </div>
-
-                                <div
-                                    className={s["ActionsMenu"] + " " + ((index === selectedIndexOfImplicantsForUserCore) ? s["ActionsMenu--Active"] : '')}
-                                    onClick={() => deleteImplicantOfUserCoreItem(index)}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#000000"><path d="M0 0h24v24H0z" fill="none" /><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /></svg>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+            {currentStep >= 5 &&
+                <TestStep5
+                    selectedImplicantsOfUserCore={selectedImplicantsOfUserCore}
+                    setSelectedImplicantsOfUserCore={setSelectedImplicantsOfUserCore}
+                />
             }
 
-            {
-                currentStep >= 6 &&
-                <section className={s["Test-Section"]}>
-                    <h3>4. Четвертий крок</h3>
-                    <p>Введіть МДНФ в форматі - ab!c v b!c</p>
-
-                    <TextField
-                        value={userMDNF}
-                        className={s["Test-ThirdStepTextField"]}
-                        label="Введіть МДНФ"
-                        variant="outlined"
-                        size='small'
-                        type="text"
-                    />
-                    <div>
-                        {['a', 'b', 'c', 'd', '!', ' v '].map((item, index) => (
-                            <Button
-                                key={index}
-                                className={s["Test-SymbolBtn"]}
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => setUserMDNF(userMDNF + item)}
-                                size="small"
-                            >
-                                {item}
-                            </Button>
-                        ))}
-                        <Button
-                            className={s["Test-SymbolBtn"]}
-                            variant="outlined"
-                            color="primary"
-                            onClick={() => setUserMDNF(userMDNF.slice(0, -1))}
-                            size="small"
-                        >
-                            ←
-                        </Button>
-                    </div>
-                </section>
+            {currentStep >= 6 &&
+                <TestStep6 userMDNF={userMDNF} setUserMDNF={setUserMDNF} />
             }
 
 
@@ -568,138 +205,19 @@ function Test() {
             }
 
             {testFinished && currentStep !== -1 &&
-                <section>
-                    <h3>Ваш бал: {userResult.userGrade.totalResult}</h3>
-
-                    {userResult.step1.notFoundPares.length > 0 &&
-                        <p>
-                            На першому кроці ви не знайшли такі пари:
-                            <br></br>
-                            {userResult.step1.notFoundPares.map((item, index) => (
-                                <span>[{item[0] + ' - ' + item[1]}]
-                                    {userResult.step1.notFoundPares.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-
-                    {userResult.step1.mismatchedPairs.length > 0 &&
-                        <p>Також пари, які ви знайшли неправильно:
-                            <br></br>
-                            {userResult.step1.mismatchedPairs.map((item, index) => (
-                                <span>[{item[0] + ' - ' + item[1]}]
-                                    {userResult.step1.mismatchedPairs.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    <p>За перший крок ви отримуєте - {userResult.userGrade.userGradeForStep1} балів із 30</p>
-                    <Divider />
-
-
-                    {userResult.step2.notFoundImplicants.length > 0 &&
-                        <p>На другому кроці ви не знайшли такі імпліканти:
-                            <br></br>
-                            {userResult.step2.notFoundImplicants.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    {userResult.step2.mismatchedImplicants.length > 0 &&
-                        <p>Також імпліканти, які ви знайшли неправильно:
-                            <br></br>
-                            {userResult.step2.mismatchedImplicants.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    <p>За другий крок ви отримуєте - {userResult.userGrade.userGradeForStep2} балів із 25</p>
-                    <Divider />
-
-
-                    {userResult.step3.notFoundImplicants.length > 0 &&
-                        <p>На третьому кроці ви не знайшли такі імпліканти, які належать до ядра:
-                            <br></br>
-                            {userResult.step3.notFoundImplicants.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    {userResult.step3.mismatchedImplicants.length > 0 &&
-                        <p>Також імпліканти, які ви знайшли неправильно:
-                            <br></br>
-                            {userResult.step3.mismatchedImplicants.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    <p>За третій крок ви отримуєте - {userResult.userGrade.userGradeForStep3} балів із 25</p>
-                    <Divider />
-
-
-                    {userResult.step4.notFoundItemsOfMDNF.length > 0 &&
-                        <p>На четвертому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
-                            <br></br>
-                            {userResult.step4.notFoundItemsOfMDNF.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step4.notFoundItemsOfMDNF.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    {userResult.step4.mismatchedItemsOfMDNF.length > 0 &&
-                        <p>Також ?імпліканти?, які ви знайшли неправильно:
-                            <br></br>
-                            {userResult.step4.mismatchedItemsOfMDNF.map((item, index) => (
-                                <span>[{item}]
-                                    {userResult.step4.mismatchedItemsOfMDNF.length - 1 === index ? ' ' : ', '}
-                                </span>
-                            ))}
-                        </p>
-                    }
-                    <p>За четвертий крок ви отримуєте - {userResult.userGrade.userGradeForStep4} балів із 25</p>
-
-                </section>
+                <UserResult userResult={userResult} />
             }
 
             {currentStep === -1 &&
-                <section className={s["Test-Section"]}>
-                    <p>На першому кроці ви вказали більше трьох невірних відповідей,
-                        <br></br>
-                        це означає що ви не готові до подальшого проходження тесту!
-                    </p>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="85px" viewBox="0 0 24 24" width="85px" fill="#1976d2"><path d="M0 0h24v24H0V0z" fill="none"/><circle cx="15.5" cy="9.5" r="1.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-6c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z"/></svg>
-                </section>
+                <TestFailedAfterStep1 />
             }
 
-            <Dialog
-                open={dialogIsOpen}
-                onClose={() => handleCloseDialog(false)}
-            >
-                <DialogTitle>
-                    {"Закінчити тест"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Ви дійсно бажаєте закінчити тест? Після відправки результату у вас буде можливість
-                        дізнатися свій балл та подивитись правильне рішення.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => handleCloseDialog(false)} type="error">Назад</Button>
-                    <Button onClick={() => handleCloseDialog(true)} type="success">Відправити</Button>
-                </DialogActions>
-            </Dialog>
+            <FinishTestDialog
+                handleCloseDialog={handleCloseDialog}
+                dialogIsOpen={dialogIsOpen}
+            />
 
-        </div >
+        </div>
     )
 }
 

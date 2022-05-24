@@ -3,15 +3,16 @@ import sharedStyles from '../shared/shared.module.scss'
 import calc from '../scripts/calc'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import { useState } from 'react'
-import Divider from '@mui/material/Divider'
 import rotateRight90 from '../scripts/rotate-matrix'
-import Slide from '@mui/material/Slide'
+import CalcStep1 from './CalcStep1/CalcStep1'
+import CalcStep2 from './CalcStep2/CalcStep2'
+import CalcStep3 from './CalcStep3/CalcStep3'
+import CalcStep4 from './CalcStep4/CalcStep4'
+import CalcStep5 from './CalcStep5/CalcStep5'
+import CalcStep6 from './CalcStep6/CalcStep6'
+import CalcStep7 from './CalcStep7/CalcStep7'
+import CalcStep8 from './CalcStep8/CalcStep8'
 
 function Calc() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -54,299 +55,47 @@ function Calc() {
       </section>
 
       {currentStep >= 1 &&
-        <Slide direction="down" in={currentStep >= 1}>
-          <section className={s["Calc-Section"]}>
-            <h2>1. Формуємо таблицю істиності</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>№</TableCell>
-                  <TableCell>a</TableCell>
-                  <TableCell>b</TableCell>
-                  <TableCell>c</TableCell>
-                  <TableCell>d</TableCell>
-                  <TableCell>F</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {result.sourceTable.map((row, index) => (
-                  <TableRow
-                    key={index}
-                    className={(currentStep >= 2 && result.task[index] === 1) ? sharedStyles["HightlightRow"] : ''}
-                  >
-                    <TableCell>{index}</TableCell>
-                    <TableCell>{row[0]}</TableCell>
-                    <TableCell>{row[1]}</TableCell>
-                    <TableCell>{row[2]}</TableCell>
-                    <TableCell>{row[3]}</TableCell>
-                    <TableCell>{result.task[index]}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            <Divider />
-          </section>
-        </Slide>
+        <CalcStep1 currentStep={currentStep} result={result} />
       }
 
       {currentStep >= 2 &&
-        <Slide direction="down" in={currentStep >= 2}>
-          <section className={s["Calc-Section"]}>
-            <h2>2. Шукаємо рядки там де F = 1</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>№</TableCell>
-                  <TableCell>a</TableCell>
-                  <TableCell>b</TableCell>
-                  <TableCell>c</TableCell>
-                  <TableCell>d</TableCell>
-                  <TableCell>F</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {result.tableOnlyTrue.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{index}</TableCell>
-                    <TableCell>{row[0]}</TableCell>
-                    <TableCell>{row[1]}</TableCell>
-                    <TableCell>{row[2]}</TableCell>
-                    <TableCell>{row[3]}</TableCell>
-                    <TableCell>1</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            <Divider />
-          </section>
-        </Slide>
+        <CalcStep2 currentStep={currentStep} result={result} />
       }
 
-      {
-        currentStep >= 3 &&
-        <Slide direction="down" in={currentStep >= 3}>
-          <section className={s["Calc-Section"]}>
-            <h2>3. Поки є моливість склеюємо рядки</h2>
-            {result.foundPares.map((item, index) => {
-              return (
-                <div key={index}>
-                  {index === 1 && <h3>И так далі <br></br>(+ видаляємо однакові імпліканти)</h3>}
-                  <Table className={sharedStyles["Table"]} key={index}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>№</TableCell>
-                        <TableCell>a</TableCell>
-                        <TableCell>b</TableCell>
-                        <TableCell>c</TableCell>
-                        <TableCell>d</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {item.map((row, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{index}</TableCell>
-                          {<TableCell>{result.foundParesIndexes[index + result.foundPares.findIndex(p => p === item)].join(' - ')}</TableCell>}
-                          <TableCell>{row[0]}</TableCell>
-                          <TableCell>{row[1]}</TableCell>
-                          <TableCell>{row[2]}</TableCell>
-                          <TableCell>{row[3]}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              )
-            })}
-
-            <Divider />
-          </section>
-        </Slide>
+      {currentStep >= 3 &&
+        <CalcStep3 currentStep={currentStep} result={result} />
       }
 
-      {
-        currentStep >= 4 &&
-        <Slide direction="down" in={currentStep >= 4}>
-          <section className={s["Calc-Section"]}>
-            <h2>4. Таблиця покриття</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {result.tableOnlyTrue.map((row, index) => (
-                    <TableCell key={index}>{row}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {helperArrForTablePokritiya.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{result.leftSideTablePokritiya[index]}</TableCell>
-                    {row.reverse().map((col, index) => (
-                      <TableCell key={index}>{col}</TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            <Divider />
-          </section>
-        </Slide>
+      {currentStep >= 4 &&
+        <CalcStep4
+          currentStep={currentStep}
+          result={result}
+          helperArrForTablePokritiya={helperArrForTablePokritiya}
+        />
       }
 
-      {
-        currentStep >= 5 &&
-        <Slide direction="down" in={currentStep >= 5}>
-          <section className={s["Calc-Section"]}>
-            <h2>5. Знаходимо Ядро</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {result.tableOnlyTrue.map((row, index) => (
-                    <TableCell key={index}>{row}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {helperArrForTablePokritiya.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell className={
-                      currentStep >= 5 &&
-                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? sharedStyles["HightlightCell"]
-                        : ''
-                    }>{result.leftSideTablePokritiya[index]}</TableCell>
-                    {row.reverse().map((col, index) => (
-                      <TableCell key={index}>{col}</TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div>
-              <span>Ядро: </span>
-              {result.core.map((item, index) => (
-                <b key={index}>{item.join('')} {index !== (result.core.length - 1) ? ' v ' : ''} </b>
-              ))}
-            </div>
-
-            <Divider />
-          </section>
-        </Slide>
+      {currentStep >= 5 &&
+        <CalcStep5
+          currentStep={currentStep}
+          result={result}
+          helperArrForTablePokritiya={helperArrForTablePokritiya}
+        />
       }
 
-      {
-        currentStep >= 6 &&
-        <Slide direction="down" in={currentStep >= 6}>
-          <section className={s["Calc-Section"]}>
-            <h2>6. ?З'єднуємо?</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {result.tableOnlyTrue.map((row, index) => (
-                    <TableCell key={index}>{row}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {helperArrForTablePokritiya.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell className={
-                      currentStep >= 5 &&
-                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? sharedStyles["HightlightCell"]
-                        : ''
-                    }>
-                      {result.leftSideTablePokritiya[index]}
-                    </TableCell>
-                    {row.map((col, index, row) => (
-                      <TableCell key={index}
-                        className={
-                          currentStep >= 6
-                            && (result.coreArrIndexes.find(item => item === helperArrForTablePokritiya.findIndex(item => item === row)) >= 0)
-                            && col === '+'
-                            ? sharedStyles["HightlightCell"]
-                            : ''
-                        }
-                      >
-                        {col}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Divider />
-          </section>
-        </Slide>
+      {currentStep >= 6 &&
+        <CalcStep6
+          currentStep={currentStep}
+          result={result}
+          helperArrForTablePokritiya={helperArrForTablePokritiya}
+        />
       }
 
-      {
-        currentStep >= 7 &&
-        <Slide direction="down" in={currentStep >= 7}>
-          <section className={s["Calc-Section"]}>
-            <h2>?Знаходимо останні /імпліканти/?</h2>
-            <Table className={sharedStyles["Table"]}>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  {result.tableOnlyTrue.map((row, index) => (
-                    <TableCell key={index}>{row}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {helperArrForTablePokritiya.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell className={
-                      currentStep >= 5 &&
-                        result.core.find(item => item.join('') === result.leftSideTablePokritiya[index].join(''))
-                        ? sharedStyles["HightlightCell"]
-                        : ''
-                    }>
-                      {result.leftSideTablePokritiya[index]}
-                    </TableCell>
-                    {row.map((col, index, row) => (
-                      <TableCell key={index}
-                        className={
-                          currentStep >= 6
-                            && (result.coreArrIndexes.find(item => item === helperArrForTablePokritiya.findIndex(item => item === row)) >= 0)
-                            && col === '+'
-                            ? sharedStyles["HightlightCell"]
-                            : ''
-                        }
-                      >
-                        {col}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-
-            {result.dopImplicants.length > 0 &&
-              <div>
-                <span>?Останні імпліканти?: </span>
-                {result.dopImplicants.map((item, index) => (
-                  <b key={index}>{item.join('')} {index !== (result.dopImplicants.length - 1) ? ' v ' : ''} </b>
-                ))}
-              </div>
-            }
-            {result.dopImplicants.length === 0 &&
-              <div>Ядро покриває всі стовпці</div>
-            }
-            <Divider />
-          </section>
-        </Slide>
+      {currentStep >= 7 &&
+        <CalcStep7
+          currentStep={currentStep}
+          result={result}
+          helperArrForTablePokritiya={helperArrForTablePokritiya}
+        />
       }
 
       {
@@ -360,18 +109,8 @@ function Calc() {
         </Button>
       }
 
-      {
-        currentStep >= 8 &&
-        <Slide direction="down" in={currentStep >= 8}>
-          <section className={s["Calc-Section"]}>
-            <h3>МДНФ в формате 1/0/x</h3>
-            {result.resultArr.map((item, index) => (
-              <b key={index}>{item.join('')} {index !== (result.resultArr.length - 1) ? ' v ' : ''} </b>
-            ))}
-            <h3>МДНФ в формате a/b/c/d</h3>
-            <b>F = {result.mdnf}</b>
-          </section>
-        </Slide>
+      {currentStep >= 8 &&
+        <CalcStep8 currentStep={currentStep} result={result} />
       }
 
     </div >
