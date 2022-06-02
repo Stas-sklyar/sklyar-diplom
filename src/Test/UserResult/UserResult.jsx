@@ -12,7 +12,7 @@ function UserResult({ userResult }) {
                     На першому кроці ви не знайшли такі пари:
                     <br></br>
                     {userResult.step1.notFoundPares.map((item, index) => (
-                        <span>[{item[0] + ' - ' + item[1]}]
+                        <span key={index}>[{item[0] + ' - ' + item[1]}]
                             {userResult.step1.notFoundPares.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -23,7 +23,7 @@ function UserResult({ userResult }) {
                 <p>Також пари, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step1.mismatchedPairs.map((item, index) => (
-                        <span>[{item[0] + ' - ' + item[1]}]
+                        <span key={index}>[{item[0] + ' - ' + item[1]}]
                             {userResult.step1.mismatchedPairs.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -37,7 +37,7 @@ function UserResult({ userResult }) {
                 <p>На другому кроці ви не знайшли такі імпліканти:
                     <br></br>
                     {userResult.step2.notFoundImplicants.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -47,7 +47,7 @@ function UserResult({ userResult }) {
                 <p>Також імпліканти, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step2.mismatchedImplicants.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step2.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -61,7 +61,7 @@ function UserResult({ userResult }) {
                 <p>На третьому кроці ви не знайшли такі імпліканти, які належать до ядра:
                     <br></br>
                     {userResult.step3.notFoundImplicants.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -71,7 +71,7 @@ function UserResult({ userResult }) {
                 <p>Також імпліканти, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step3.mismatchedImplicants.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step3.notFoundImplicants.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -85,7 +85,7 @@ function UserResult({ userResult }) {
                 <p>На четвертому кроці ви не знайшли ?такі імпліканти, які належать до МДНФ?:
                     <br></br>
                     {userResult.step4.notFoundItemsOfMDNF.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step4.notFoundItemsOfMDNF.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}
@@ -95,7 +95,7 @@ function UserResult({ userResult }) {
                 <p>Також ?імпліканти?, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step4.mismatchedItemsOfMDNF.map((item, index) => (
-                        <span>[{item}]
+                        <span key={index}>[{item}]
                             {userResult.step4.mismatchedItemsOfMDNF.length - 1 === index ? ' ' : ', '}
                         </span>
                     ))}

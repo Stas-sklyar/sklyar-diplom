@@ -55,9 +55,13 @@ function Test() {
     }
 
     useEffect(() => {
+        if(!timerActive) {
+            return
+        }
         if (seconds === 0) {
             alert("Час вийшов!")
             setTimerActive(false)
+            sendTest()
         }
         if (seconds > 0 && timerActive) {
             setTimeout(setSeconds, 1000, seconds - 1)
@@ -128,7 +132,7 @@ function Test() {
             {timerActive && currentStep !== 0 && !testFinished &&
                 <h4>
                     {
-                        (seconds / 60).toFixed(0) - 1 === 0
+                        (seconds / 60).toFixed(0) - 1 < 0
                             ? 'Остання хвилина!'
                             : 'Залишилось: ' + ((seconds / 60).toFixed(0) - 1) + ' хвилин'
                     }

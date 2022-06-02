@@ -4,7 +4,7 @@ export default function handleTest(userAnswers, result) {
     let userResult = {
         studentName: userAnswers.studentName,
         studentGroup: userAnswers.studentGroup,
-        
+
         step1: {
             notFoundPares: [],
             mismatchedPairs: []
@@ -56,7 +56,12 @@ export default function handleTest(userAnswers, result) {
     let indexesForStep1 = result.foundParesIndexes.slice(0, result.foundPares[0].length)
 
     result.mdnf = result.mdnf.split(' v ')
-    userAnswers.userMDNF = userAnswers.userMDNF.split(' v ')
+    if (userAnswers.userMDNF === '') {
+        userAnswers.userMDNF = []
+    }
+    else {
+        userAnswers.userMDNF = userAnswers.userMDNF.split(' v ')
+    }
 
     // STEP 1 -----------------
     let notFoundPares = []
