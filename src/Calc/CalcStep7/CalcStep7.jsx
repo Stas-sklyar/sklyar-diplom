@@ -13,7 +13,9 @@ function CalcStep7({ result, currentStep, helperArrForTablePokritiya }) {
     return (
         <Slide direction="down" in={currentStep >= 7}>
             <section className={s["Calc-Section"] + " " + s["Calc-Section--Scrollable"]}>
-                <h2>?Знаходимо останні /імпліканти/?</h2>
+                <h2>7. Пошук бракуючих імплікант, для покриття <br></br>всіх стовпців таблиці покриття</h2>
+                <p>Для стовпців які не мають перетину з ядром є можливість вибрати довільну імпліканту,<br></br> але потрібно щоб ця імпліканта входила в мінтерм цього стовпця. </p>
+                <p>Якщо ядро покриває всі стовпці, то відповідно ніякі імпліканти вибирати <b>не потрібно</b>.</p>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
                         <TableRow>

@@ -13,7 +13,8 @@ function CalcStep6({ result, currentStep, helperArrForTablePokritiya }) {
     return (
         <Slide direction="down" in={currentStep >= 6}>
             <section className={s["Calc-Section"] + " " + s["Calc-Section--Scrollable"]}>
-                <h2>6. ?З'єднуємо?</h2>
+                <h2>6. ?викреслювання стовпців?</h2>
+                 <p>Після того як було визначено ядро, починається етап “викреслювання стовпців”.<br></br> Спочатку викреслюємо стовпці які мають перетини з ядром, яке ми знайшли на минулому етапі.</p>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
                         <TableRow>

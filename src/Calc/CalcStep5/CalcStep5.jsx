@@ -13,7 +13,9 @@ function CalcStep5({ result, currentStep, helperArrForTablePokritiya }) {
     return (
         <Slide direction="down" in={currentStep >= 5}>
             <section className={s["Calc-Section"] + " " + s["Calc-Section--Scrollable"]}>
-                <h2>5. Знаходимо Ядро</h2>
+                <h2>5. Формування ядра МДНФ</h2>
+                <p>Далі згідно алгоритму та на основі таблиці покриття, можемо визначити ядро МДНФ.<br></br> Ядром будуть імпліканти для яких в відповідном стовпці стоїть <b>тільки одна мітка</b>. </p>
+                <p>В нашому випадку це імпліканти: 10xx, x1x1, x100. </p>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
                         <TableRow>

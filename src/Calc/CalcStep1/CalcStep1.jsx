@@ -13,7 +13,8 @@ function CalcStep1({ result, currentStep }) {
     return (
         <Slide direction="down" in={currentStep >= 1}>
             <section className={s["Calc-Section"]}>
-                <h2>1. Формуємо таблицю істиності</h2>
+                <h2>1. Формування таблиці істиності</h2>
+                <p>Щоб почати етап мінімізації булевої функції методом КМ спочатку необхідно скласти таблицю істинності.<br></br> Для функції з чотирма змінними таблиця істинності буде виглядати так:</p>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
                         <TableRow>

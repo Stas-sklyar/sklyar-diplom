@@ -13,7 +13,8 @@ function CalcStep2({ result, currentStep }) {
     return (
         <Slide direction="down" in={currentStep >= 2}>
           <section className={s["Calc-Section"]}>
-            <h2>2. Шукаємо рядки там де F = 1</h2>
+            <h2>2. Формування таблиці в якій f(a,b,c,d) = 1</h2>
+            <p>Далі потрібно сформувати нову таблицю з мінтермами для яких f(a,b,c,d) = 1,<br></br> а також потрібно <b>згрупувати</b> мінтерми по кількості одиниць в них. </p>
             <Table className={sharedStyles["Table"]}>
               <TableHead>
                 <TableRow>
