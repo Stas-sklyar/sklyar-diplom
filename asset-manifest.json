@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/sklyar-diplom/static/css/main.e2fd2e5b.css",
-    "main.js": "/sklyar-diplom/static/js/main.9974df1b.js",
+    "main.css": "/sklyar-diplom/static/css/main.a88bb26c.css",
+    "main.js": "/sklyar-diplom/static/js/main.16c547ab.js",
     "index.html": "/sklyar-diplom/index.html",
-    "main.e2fd2e5b.css.map": "/sklyar-diplom/static/css/main.e2fd2e5b.css.map",
-    "main.9974df1b.js.map": "/sklyar-diplom/static/js/main.9974df1b.js.map"
+    "main.a88bb26c.css.map": "/sklyar-diplom/static/css/main.a88bb26c.css.map",
+    "main.16c547ab.js.map": "/sklyar-diplom/static/js/main.16c547ab.js.map"
   },
   "entrypoints": [
-    "static/css/main.e2fd2e5b.css",
-    "static/js/main.9974df1b.js"
+    "static/css/main.a88bb26c.css",
+    "static/js/main.16c547ab.js"
   ]
 }
