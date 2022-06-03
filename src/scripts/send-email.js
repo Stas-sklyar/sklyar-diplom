@@ -6,6 +6,7 @@ export default function sendEmail(userResult) {
         userName: userResult.studentName,
         userGroup: userResult.studentGroup,
         userPoint: userResult.userGrade.totalResult + '',
+        userTask: userResult.task,
 
         userResultStep1NotFoundPares: userResult.step1.notFoundPares.join(' | '),
         userResultStep1MismatchedPairs: userResult.step1.mismatchedPairs.join(' | '),

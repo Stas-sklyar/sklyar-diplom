@@ -47,7 +47,7 @@ function TestStep4({ selectedLastImplicants, setSelectedLastImplicants }) {
     return (
         <section className={s["Test-Section"]}>
             <h3>2. Другий Крок</h3>
-            <p>Результат склейки + імпліканти які не склеялись ні з чим</p>
+            <p>Введіть отриманні імпліканти після завершення комбінування й<br></br> імпліканти які <b>не</b> підлягають комбінванню.</p>
 
             <div>
                 <div className={s["Test-AddItemForm"]}>

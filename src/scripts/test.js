@@ -4,6 +4,7 @@ export default function handleTest(userAnswers, result) {
     let userResult = {
         studentName: userAnswers.studentName,
         studentGroup: userAnswers.studentGroup,
+        task: userAnswers.task,
 
         step1: {
             notFoundPares: [],

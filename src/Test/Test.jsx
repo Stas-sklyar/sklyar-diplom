@@ -87,6 +87,7 @@ function Test() {
             userMDNF,
             studentName,
             studentGroup,
+            task
         }
         let userResult = handleTest(userAnswers, result)
         setUserResult(userResult)

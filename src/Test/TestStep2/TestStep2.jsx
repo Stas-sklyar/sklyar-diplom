@@ -12,7 +12,7 @@ function TestStep2({ result, currentStep }) {
     return (
         <Slide direction="down" in={currentStep >= 2}>
             <section className={s["Test-Section"]}>
-                <p>?Шукаємо рядки там де F = 1? і сортуємо таблицю по кількості одиниць</p>
+                <h4>Всі рядки з мінтермами для яких f(a,b,c,d) = 1</h4>
                 <Table className={sharedStyles["Table"]}>
                     <TableHead>
                         <TableRow>

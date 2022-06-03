@@ -47,7 +47,7 @@ function TestStep5({ selectedImplicantsOfUserCore, setSelectedImplicantsOfUserCo
     return (
         <section className={s["Test-Section"]}>
             <h3>3. Третій крок</h3>
-            <p>Введіть ядро в форматі - [[1,0,x,1], [0,1,x,0]]</p>
+            <p>Введіть імпліканти які належать до ядра МДНФ в форматі: [1,0,x,1]</p>
 
             <div className={s["Test-AddItemForm"]}>
                 <TextField
