@@ -51,7 +51,7 @@ function Calc() {
           variant="outlined"
           type="number"
         />
-        <Button variant="contained" onClick={() => onCalc()}>Минимизировать</Button>
+        <Button variant="contained" onClick={() => onCalc()}>Мінімізувати</Button>
       </section>
 
       {currentStep >= 1 &&

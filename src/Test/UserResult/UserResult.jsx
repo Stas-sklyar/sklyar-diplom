@@ -20,7 +20,7 @@ function UserResult({ userResult }) {
             }
 
             {userResult.step1.mismatchedPairs.length > 0 &&
-                <p>Також пари, які ви знайшли неправильно:
+                <p>Пари, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step1.mismatchedPairs.map((item, index) => (
                         <span key={index}>[{item[0] + ' - ' + item[1]}]
@@ -44,7 +44,7 @@ function UserResult({ userResult }) {
                 </p>
             }
             {userResult.step2.mismatchedImplicants.length > 0 &&
-                <p>Також імпліканти, які ви знайшли неправильно:
+                <p>Імпліканти, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step2.mismatchedImplicants.map((item, index) => (
                         <span key={index}>[{item}]
@@ -68,7 +68,7 @@ function UserResult({ userResult }) {
                 </p>
             }
             {userResult.step3.mismatchedImplicants.length > 0 &&
-                <p>Також імпліканти, які ви знайшли неправильно:
+                <p>Імпліканти, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step3.mismatchedImplicants.map((item, index) => (
                         <span key={index}>[{item}]
@@ -82,7 +82,7 @@ function UserResult({ userResult }) {
 
 
             {userResult.step4.notFoundItemsOfMDNF.length > 0 &&
-                <p>На четвертому кроці ви не знайшли ???такі імпліканти, які належать до МДНФ???:
+                <p>На четвертому кроці ви не знайшли такі імпліканти, які належать до МДНФ:
                     <br></br>
                     {userResult.step4.notFoundItemsOfMDNF.map((item, index) => (
                         <span key={index}>[{item}]
@@ -92,7 +92,7 @@ function UserResult({ userResult }) {
                 </p>
             }
             {userResult.step4.mismatchedItemsOfMDNF.length > 0 &&
-                <p>Також ??імпліканти??, які ви знайшли неправильно:
+                <p>Імпліканти, які ви знайшли неправильно:
                     <br></br>
                     {userResult.step4.mismatchedItemsOfMDNF.map((item, index) => (
                         <span key={index}>[{item}]

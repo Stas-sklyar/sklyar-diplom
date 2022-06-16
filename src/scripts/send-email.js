@@ -25,10 +25,10 @@ export default function sendEmail(userResult) {
         step4Grade: userResult.userGrade.userGradeForStep4,
     }
 
-    // send(
-    //     SERVICE_ID,
-    //     MAIN_TEMPLATE_ID,
-    //     toSend,
-    //     PUBLIC_KEY
-    // )
+    send(
+        SERVICE_ID,
+        MAIN_TEMPLATE_ID,
+        toSend,
+        PUBLIC_KEY
+    )
 }

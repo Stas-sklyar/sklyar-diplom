@@ -5,13 +5,14 @@ export default function sendEmailAfterFailedTest(userData) {
     let toSend = {
         studentName: userData.studentName,
         studentGroup: userData.studentGroup,
+        task: userData.task,
         studentAnswers: userData.selectedPairsOfImplicants.join(' | ')
     }
 
-    // send(
-    //     SERVICE_ID,
-    //     FAILED_TEST_TEMPLATE_ID,
-    //     toSend,
-    //     PUBLIC_KEY
-    // )
+    send(
+        SERVICE_ID,
+        FAILED_TEST_TEMPLATE_ID,
+        toSend,
+        PUBLIC_KEY
+    )
 }

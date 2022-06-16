@@ -38,14 +38,14 @@ function Test() {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     const startTest = () => {
-        // if (studentName.length < 3) {
-        //     alert("Введіть своє ім'я!")
-        //     return
-        // }
-        // if (studentGroup.length < 3) {
-        //     alert("Введіть свою групу!")
-        //     return
-        // }
+        if (studentName.length < 3) {
+            alert("Введіть своє ім'я!")
+            return
+        }
+        if (studentGroup.length < 3) {
+            alert("Введіть свою групу!")
+            return
+        }
         setTimerActive(!timerActive)
         setCurrentStep(currentStep + 1)
 
@@ -114,7 +114,8 @@ function Test() {
             let userData = {
                 studentName,
                 studentGroup,
-                selectedPairsOfImplicants
+                selectedPairsOfImplicants,
+                task
             }
             sendEmailAfterFailedTest(userData)
         }
@@ -125,8 +126,6 @@ function Test() {
             checkStep1()
         }
     }, [currentStep])
-
-    // EMAIL FLOW
 
     return (
         <div className={s["Test"]}>
